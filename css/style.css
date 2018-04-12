@@ -1,0 +1,72 @@
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #00b894;
+}
+
+#mainWrapper {
+    margin: 40px 0 20px;
+}
+
+/* Header section */
+
+header {
+    height: 130px;
+    margin-bottom: 20px;
+    background-color: #F8F8F8;
+}
+
+/* Slideshow section */
+
+#slideshowContainer {
+    height: 250px;
+    margin: 0 30px 20px ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#slideshow {
+    width: 100%;
+    height: 100%;
+    background-color: #55efc4;
+}
+
+/* Map section */
+
+#appContainer {
+    margin: 0 30px 20px;
+}
+
+#mapContainer {
+    width: 100%;
+    height: 300px;
+    background-color: #f8f8f8;
+    border: black 1px solid;
+    margin-bottom: 10px;
+}
+
+infosContainer {
+    height: 10px;
+    background-color: #fdcb6e;
+    border: white 1px solid;
+}
+
+#infosStation {
+    height: 300px;
+    background-color: #fdcb6e;
+}
+
+/* Countdown section */
+
+footer {
+    height: 80px;
+    margin: 0;
+    background-color: #6c5ce7;
+}
