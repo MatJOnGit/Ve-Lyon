@@ -44,20 +44,9 @@ header {
     margin: 0 0 20px;
 }
 
-#mapContainer {
-    width: 100%;
-    height: 450px;
-    background-color: #f8f8f8;
-    border: black 1px solid;
-}
-
 #map {
-    width: 100%;
-    height: 100%;
-}
-
-infosContainer {
-    border: white 1px solid;
+    height: 450px;
+    border: black 1px solid;
 }
 
 #infosStation {
