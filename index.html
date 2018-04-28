@@ -15,27 +15,31 @@
 
 <body>
     <div id="mainWrapper">
-        <!-- encart de titre -->
-        <header>
-        </header>
-        
-        <!-- encart type diapositive -->
-        <div>
-            <div id="slideshow"></div>
-        
-            <!-- encart station -->
-            <div id="appContainer">
+        <!-- encart bannière + slideshow -->
+        <div id="intro">
+            <!-- bannière -->
+            <header></header>
             
+            <!-- slideshow -->
+            <div id="slideshow"></div>
+        </div>
+        
+        <!-- encart app -->
+        <div id="appContainer">
+            
+            <!-- map + info sur la station sélectionnée -->
+            <div>
                 <!-- map -->
                 <div id="map"></div>
 
-                <!-- encart pour l'affiche des infos de la station -->
+                <!-- information sur la station sélectionnée + booking -->
                 <div id="infosStation"></div>
-            </div>
-        </div>
                 
-        <!-- encart infos réservation -->
-        <footer></footer>
+            </div>
+            
+            <!-- décompte temps restant sur la réservation (contenu affiché en js) -->
+            <footer></footer>
+        </div>
     </div>
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCanautZ2s7QoJaszr79jgpvY1bZpqmqFA" async defer ></script>
