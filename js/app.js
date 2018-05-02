@@ -15,7 +15,7 @@ function stationsTabBuilder(stations) {
 function initMap(stations) {
     
     const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11.8,
+        zoom: 11.7,
         center: {
             lat: 45.754424,
             lng: 4.858030
@@ -29,7 +29,7 @@ function initMap(stations) {
     let markers = [];
     stations.forEach(station => {
         
-        let marker = new google.maps.Marker({
+        const marker = new google.maps.Marker({
             position: {
                 lat: station.latitude,
                 lng: station.longitude
@@ -59,30 +59,86 @@ function initMap(stations) {
 // Display station data into "infosStation" div
 function displayData(stations, stationNumber) {
     stationInfo.innerHTML = '';
+    stationInfo.style.display = "flex";
+    stationInfo.style.flexDirection = "column";
+    stationInfo.style.justifyContent = "center";
     
-    let stationTitle = document.createElement('p');
-    stationTitle.textContent = 'Informations sur la station';
+    const stationName = document.createElement('p');
+    stationName.textContent = 'La station "' + stations[stationNumber].name + '" est actuellement';
+    stationName.style.textAlign = "center";
 
-    let stationAddress = document.createElement('p');
-    stationAddress.textContent = 'Adresse : ' + stations[stationNumber].address.toLowerCase();
+    const stationStatus = document.createElement('div');
+    stationStatus.textContent = stations[stationNumber].status === 'CLOSED' ? 
+        'FERMEE' :
+        stations[stationNumber].available_bikes > 0 ?
+            'OUVERTE' :
+            "ouverte, mais il n'y a pas de vélo disponible actuellement";
+    stationStatus.style.backgroundColor = stations[stationNumber].status_color;
+    stationStatus.style.color = "white";
+    stationStatus.style.textAlign = "center";
 
-    let stationStatus = document.createElement('p');
-    stationStatus.textContent = 'Status de la station : ' + (stations[stationNumber].status === 'CLOSED' ? 'Fermée' : 'Ouverte');
+    const dataTable = document.createElement('table');
+    dataTable.style.margin = "16px 0";
 
-    let stationAvailableBikes = document.createElement('p');
-    stationAvailableBikes.textContent = "Nombre de vélo disponible : " + stations[stationNumber].available_bikes;
+    const address = document.createElement('tr');
+    
+    const addressTitle = document.createElement('td');
+    addressTitle.textContent = "Adresse";
+    
+    const addressContent = document.createElement('td');
+    addressContent.textContent = stations[stationNumber].address.toLowerCase();
 
-    let stationAvailableSlots = document.createElement('p');
-    stationAvailableSlots.textContent = "Nombre d'emplacement disponible : " + (stations[stationNumber].bike_stands - stations[stationNumber].available_bikes);
+    const availableBikes = document.createElement('tr');
+    
+    const availableBikesTitle = document.createElement('td');
+    availableBikesTitle.textContent = "Nombre de vélo(s) disponible(s)";
+    
+    const availableBikesContent = document.createElement('td');
+    availableBikesContent.textContent = stations[stationNumber].available_bikes;
+    
+    const availableStands = document.createElement('tr');
+    
+    const availableStandsTitle = document.createElement('td');
+    availableStandsTitle.textContent = "Nombre d'emplacement(s) disponible(s)";
+    
+    const availableStandsContent = document.createElement('td');
+    availableStandsContent.textContent = stations[stationNumber].bike_stands - stations[stationNumber].available_bikes;
 
-    stationInfo.appendChild(stationTitle);
-    stationInfo.appendChild(stationAddress);
+    stationInfo.appendChild(stationName);
     stationInfo.appendChild(stationStatus);
-    stationInfo.appendChild(stationAvailableBikes);
-    stationInfo.appendChild(stationAvailableSlots);
+    
+    address.appendChild(addressTitle);
+    address.appendChild(addressContent);
+    dataTable.appendChild(address);
+    
+    availableBikes.appendChild(availableBikesTitle);
+    availableBikes.appendChild(availableBikesContent);
+    dataTable.appendChild(availableBikes);
+    
+    availableStands.appendChild(availableStandsTitle);
+    availableStands.appendChild(availableStandsContent);
+    dataTable.appendChild(availableStands);
+    
+    stationInfo.appendChild(dataTable);
+    
+    if (stations[stationNumber].flag_color === 'blue') {
+        var bookingButton = document.createElement('button');
+        bookingButton.textContent = "Je réserve un vélo'v";
+        bookingButton.style.margin = '16px 90px';
+        
+        stationInfo.appendChild(bookingButton);
+        
+        bookingButton.addEventListener("click", function () {
+            initBooking(stations[stationNumber]);
+        });
+    }
 }
 
-let stationInfo = document.getElementById('infosStation');
+function initBooking(station) {
+    console.log(station.name);
+}
+
+const stationInfo = document.getElementById('infosStation');
 
 fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=699ee067b85c71a4f7ca9adfdcaaa5145b06a437')
     .then(response => response.json())
