@@ -6,53 +6,125 @@
     box-sizing: border-box;
 }
 
+html {
+    font-family: 'Roboto';
+}
+
 /* Intro section */
+header {
+    height: 330px;
+    overflow: hidden;
+}
 
-    #intro {
-        background-color: grey;
-        height: 370px;
-    }
+header img {
+    height: 330px;
+    filter: hue-rotate(50deg);
+    -webkit-filter: hue-rotate(50deg);
+}
 
-    header {
-        height: 130px;
-        margin: 0 30px 20px;
-        background-color: #F8F8F8;
-    }
+/* Slideshow section */
+h1 {
+    height: 70px;
+    position: absolute;
+    top: 15px;
+    left: 10%;
+    color: white;
+    font-size: 1.7em;
+    text-align: center;
+    margin: 0;
+    text-shadow: 2px 2px black;
+}
 
-    /* Slideshow section */
-        #slideshow {
-            height: 200px;
-            margin: 0 30px;
-            background-color: #0984e3;
-        }
+h1 span {
+    font-style: oblique;
+}
+
+#slideshow {
+    width: 80%;
+    height: 240px;
+    background-color: #0984e3;
+    opacity: 0.9;
+    position: absolute;
+    top: 65px;
+    left: 10%;
+    border: white 2px solid;
+}
 
 /* App section */
+#map {
+    height: 450px;
+    margin: 10px;
+    border: grey 1px solid;
+    border-radius: 5px;
+}
 
-    #map {
-        height: 450px;
-        margin: 10px;
-        border: grey 1px solid;
-        border-radius: 5px;
+/* Data display section */
+
+#infosStation {
+    background-color: #b2bec3;
+    margin: 10px;
+    border: black 1px solid;
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 0.9em;
+}
+
+/* Station data screen */
+
+#infosStation p:nth-child(1) {
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+#infosStation p:nth-child(2) {
+    margin: 0;
+    padding: 3px 10px;
+    align-self: center;
+    text-align: center;
+    border: white 1px solid;
+    color: white;
+    font-size: 1.2em;
+}
+
+table {
+    margin: 16px 0;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px 20px;
+}
+
+td:nth-child(1) {
+    width: 40%;
+}
+
+td:nth-child(2) {
+    width: 60%;
+}
+
+.splitter
+
+
+button {
+    font-size: 1.1em;
+}
+
+/* Booking screen */
+
+#cancelButton {
+    width: 2%;
+    margin-left: 90%;
+}
+
+/* Countdown section */
+
+    footer {
+        display: none;
+        height: 80px;
+        margin: 0;
+        background-color: #0984e3;
     }
-
-    /* Data display section */
-
-        #infosStation {
-            margin: 10px;
-            border: grey 1px solid;
-            border-radius: 5px;
-            display: none;
-        }
-
-        td {
-            padding: 5px 15px;
-        }
-
-    /* Countdown section */
-
-        footer {
-            display: none;
-            height: 80px;
-            margin: 0;
-            background-color: #0984e3;
-        }

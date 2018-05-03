@@ -45,53 +45,48 @@ function initMap(stations) {
             // Center map on the selected item
             map.setZoom(18);
             map.setCenter(marker.getPosition());
-            displayData(stations, markers.indexOf(this));
+            displayStationData(stations, markers.indexOf(this));
         })
         
         markers.push(marker);
     });
     
+    // Add a cluster container all markers previously created
     var markerCluster = new MarkerClusterer(map, markers, {
         imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     });
 }
 
 // Display station data into "infosStation" div
-function displayData(stations, stationNumber) {
+function displayStationData(stations, stationNumber) {
     stationInfo.innerHTML = '';
     stationInfo.style.display = "flex";
-    stationInfo.style.flexDirection = "column";
-    stationInfo.style.justifyContent = "center";
     
     const stationName = document.createElement('p');
-    stationName.textContent = 'La station "' + stations[stationNumber].name + '" est actuellement';
-    stationName.style.textAlign = "center";
+    stationName.textContent = 'La station "' + stations[stationNumber].name.toLowerCase() + '" est actuellement';
 
-    const stationStatus = document.createElement('div');
+    const stationStatus = document.createElement('p');
     stationStatus.textContent = stations[stationNumber].status === 'CLOSED' ? 
-        'FERMEE' :
+        'Fermée' :
         stations[stationNumber].available_bikes > 0 ?
-            'OUVERTE' :
-            "ouverte, mais il n'y a pas de vélo disponible actuellement";
+            'Ouverte' :
+            "Ouverte, mais il n'y a pas de vélo disponible actuellement";
     stationStatus.style.backgroundColor = stations[stationNumber].status_color;
-    stationStatus.style.color = "white";
-    stationStatus.style.textAlign = "center";
 
     const dataTable = document.createElement('table');
-    dataTable.style.margin = "16px 0";
 
     const address = document.createElement('tr');
     
     const addressTitle = document.createElement('td');
-    addressTitle.textContent = "Adresse";
+    addressTitle.textContent = "Localisation";
     
     const addressContent = document.createElement('td');
-    addressContent.textContent = stations[stationNumber].address.toLowerCase();
+    addressContent.textContent = stations[stationNumber].address;
 
     const availableBikes = document.createElement('tr');
     
     const availableBikesTitle = document.createElement('td');
-    availableBikesTitle.textContent = "Nombre de vélo(s) disponible(s)";
+    availableBikesTitle.textContent = "Vélo(s) disponible(s)";
     
     const availableBikesContent = document.createElement('td');
     availableBikesContent.textContent = stations[stationNumber].available_bikes;
@@ -99,7 +94,7 @@ function displayData(stations, stationNumber) {
     const availableStands = document.createElement('tr');
     
     const availableStandsTitle = document.createElement('td');
-    availableStandsTitle.textContent = "Nombre d'emplacement(s) disponible(s)";
+    availableStandsTitle.textContent = "Emplacement(s) libre(s)";
     
     const availableStandsContent = document.createElement('td');
     availableStandsContent.textContent = stations[stationNumber].bike_stands - stations[stationNumber].available_bikes;
@@ -122,20 +117,34 @@ function displayData(stations, stationNumber) {
     stationInfo.appendChild(dataTable);
     
     if (stations[stationNumber].flag_color === 'blue') {
-        var bookingButton = document.createElement('button');
+        const bookingButton = document.createElement('button');
         bookingButton.textContent = "Je réserve un vélo'v";
-        bookingButton.style.margin = '16px 90px';
+        bookingButton.style.margin = '16px 90px'
+        
+        bookingButton.addEventListener("click", function () {            
+            initBooking(stations, stationNumber);
+        });
         
         stationInfo.appendChild(bookingButton);
-        
-        bookingButton.addEventListener("click", function () {
-            initBooking(stations[stationNumber]);
-        });
     }
 }
 
-function initBooking(station) {
-    console.log(station.name);
+function initBooking(stations, stationNumber) {
+        
+    const bookedStation = new Booking(stations[stationNumber].name, stations[stationNumber].bike_stands, stations[stationNumber].available_bikes)
+    
+    stationInfo.innerHTML = '';
+    
+    // create a button to come back to previous screen
+    const cancelButton = document.createElement('div');
+    cancelButton.textContent = 'X';
+    cancelButton.id = 'cancelButton';
+
+    cancelButton.addEventListener("click", function () {
+        displayStationData(stations, stationNumber);
+    })
+    
+    stationInfo.appendChild(cancelButton);
 }
 
 const stationInfo = document.getElementById('infosStation');
