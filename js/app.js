@@ -63,7 +63,7 @@ function displayStationData(stations, stationNumber) {
     stationInfo.style.display = "flex";
     
     const stationName = document.createElement('p');
-    stationName.textContent = 'La station "' + stations[stationNumber].name.toLowerCase() + '" est actuellement';
+    stationName.textContent = 'La station "' + stations[stationNumber].name.toLowerCase() + '" est actuellement ...';
 
     const stationStatus = document.createElement('p');
     stationStatus.textContent = stations[stationNumber].status === 'CLOSED' ? 
@@ -118,8 +118,8 @@ function displayStationData(stations, stationNumber) {
     
     if (stations[stationNumber].flag_color === 'blue') {
         const bookingButton = document.createElement('button');
-        bookingButton.textContent = "Je réserve un vélo'v";
-        bookingButton.style.margin = '16px 90px'
+        bookingButton.textContent = "Je réserve mon vélo'v";
+        bookingButton.classList.add("bookingButton");
         
         bookingButton.addEventListener("click", function () {            
             initBooking(stations, stationNumber);
@@ -139,12 +139,18 @@ function initBooking(stations, stationNumber) {
     const cancelButton = document.createElement('div');
     cancelButton.textContent = 'X';
     cancelButton.id = 'cancelButton';
-
+    
+    const canvasDiv = document.createElement('div');
+    canvasDiv.id = 'canvasDiv';
+    
+    stationInfo.appendChild(cancelButton);
+    stationInfo.appendChild(canvasDiv);
+    
+    displayCanvas();
+    
     cancelButton.addEventListener("click", function () {
         displayStationData(stations, stationNumber);
     })
-    
-    stationInfo.appendChild(cancelButton);
 }
 
 const stationInfo = document.getElementById('infosStation');
