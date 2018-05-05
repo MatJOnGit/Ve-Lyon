@@ -62,7 +62,7 @@ h1 span {
 /* Data display section */
 
 #infosStation {
-    background-color: #b2bec3;
+    background-color: #74b9ff;
     margin: 10px;
     border: black 1px solid;
     border-radius: 5px;
@@ -79,6 +79,7 @@ h1 span {
 }
 
 #infosStation p:nth-child(2) {
+    max-width: 250px;
     margin: 0;
     padding: 7px 15px;
     align-self: center;
@@ -109,25 +110,51 @@ td:nth-child(2) {
     font-size: 1.1em;
     color: white;
     border: 2px white solid;
-    margin: 16px 50px;
     border-radius: 40px;
-    background-color: #0984e3;
     box-shadow: 2px 3px #636e72;
-    padding: 8px 12px;
+    padding: 8px 16px;
+}
+
+.booking {
+    background-color: #0984e3;
+    margin: 16px 0px;
+    align-self: center;
 }
 
 /* Booking screen */
 
-#cancelButton {
-    width: 2%;
-    margin: 10px 0 10px 90%;
-}
-
 #canvasDiv {
     width: 280px;
+    margin: 25px 0 60px 0;
     border: black 1px solid;
     align-self: center;
-    margin-bottom: 15px;
+    position: relative;
+}
+
+#cancelButton {
+    width: 10px;
+    font-size: 1.1em;
+    margin: 0;
+    align-self: center;
+    position: absolute;
+    top: -22px;
+    left: 268px;
+}
+
+.reset,
+.confirm {
+    position: absolute;
+    top: 264px;
+}
+
+.reset {
+    background-color: #e17055;
+    left: 0;
+}
+
+.confirm {
+    background-color: #00b894;
+    right: 0;
 }
 
 #canvas {
@@ -139,10 +166,40 @@ td:nth-child(2) {
 /* Countdown section */
 
 footer {
+    margin: 10px;
+    border: black 1px solid;
+    border-radius: 5px;
+    /*background-color: #b2bec3;*/
+    background-color: #74b9ff;
+    font-size: 0.9em;
     display: none;
-    height: 80px;
-    margin: 0;
-    background-color: #0984e3;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer div:nth-child(1) {
+    margin-top: 20px;
+    color: white;
+}
+
+footer div:nth-child(2) {
+    width: 100px;
+    height: 100px;
+    margin: 15px 0 20px;
+    padding: 8px 12px;
+    background-color: #00b894;
+    border: 2px white solid;
+    border-radius: 50%;
+    box-shadow: 2px 3px #636e72;
+    font-family: 'Orbitron';
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; 
 }
 
 /* Media Queries */

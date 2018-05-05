@@ -119,7 +119,7 @@ function displayStationData(stations, stationNumber) {
     if (stations[stationNumber].flag_color === 'blue') {
         const bookingButton = document.createElement('button');
         bookingButton.textContent = "Je réserve mon vélo'v";
-        bookingButton.classList.add("bookingButton");
+        bookingButton.classList.add('bookingButton', 'booking');
         
         bookingButton.addEventListener("click", function () {            
             initBooking(stations, stationNumber);
@@ -135,15 +135,25 @@ function initBooking(stations, stationNumber) {
     
     stationInfo.innerHTML = '';
     
+    const canvasDiv = document.createElement('div');
+    canvasDiv.id = 'canvasDiv';
+    
     // create a button to come back to previous screen
     const cancelButton = document.createElement('div');
     cancelButton.textContent = 'X';
     cancelButton.id = 'cancelButton';
     
-    const canvasDiv = document.createElement('div');
-    canvasDiv.id = 'canvasDiv';
+    const resetButton = document.createElement('div');
+    resetButton.textContent = 'Réinitialiser';
+    resetButton.classList.add('bookingButton', 'reset');
     
-    stationInfo.appendChild(cancelButton);
+    const confirmButton = document.createElement('div');
+    confirmButton.textContent = 'Valider';
+    confirmButton.classList.add('bookingButton', 'confirm');
+    
+    canvasDiv.appendChild(cancelButton);
+    canvasDiv.appendChild(resetButton);
+    canvasDiv.appendChild(confirmButton);
     stationInfo.appendChild(canvasDiv);
     
     displayCanvas();
@@ -151,6 +161,36 @@ function initBooking(stations, stationNumber) {
     cancelButton.addEventListener("click", function () {
         displayStationData(stations, stationNumber);
     })
+    
+    confirmButton.addEventListener("click", function () {
+        displayStationData(stations, stationNumber);
+        initCountdown();
+    })
+}
+
+function initCountdown(stations, stationNumber) {    
+    console.log(document.getElementsByTagName('footer'));
+    console.log(document.getElementById('mainWrapper'));
+    
+    const mainWrapper = document.getElementById('mainWrapper');
+    
+    // Clean any potential footer element
+    if (document.getElementsByTagName('footer').length > 0) {
+        document.getElementById('mainWrapper').removeChild(document.getElementsByTagName('footer'));
+    }
+    
+    const newFooter = document.createElement('footer');
+    newFooter.style.display = 'flex';
+    
+    const countdownIntro = document.createElement('div');
+    countdownIntro.textContent = 'Temps restant sur votre réservation :';
+    
+    const countdownElt = document.createElement('div');
+    countdownElt.textContent = '19 : 05';
+    
+    newFooter.appendChild(countdownIntro);
+    newFooter.appendChild(countdownElt);    
+    mainWrapper.appendChild(newFooter);
 }
 
 const stationInfo = document.getElementById('infosStation');
