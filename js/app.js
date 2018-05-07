@@ -59,11 +59,16 @@ function initMap(stations) {
 
 // Display station data into "infosStation" div
 function displayStationData(stations, stationNumber) {
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+        let mapElt = document.getElementById('map');
+        mapElt.style.width = 'calc(100% - 400px)';
+    }
+    
     stationInfo.innerHTML = '';
     stationInfo.style.display = "flex";
     
     const stationName = document.createElement('p');
-    stationName.textContent = 'La station "' + stations[stationNumber].name.toLowerCase() + '" est actuellement ...';
+    stationName.textContent = 'La station "' + stations[stationNumber].name.toLowerCase() + '" est actuellement';
 
     const stationStatus = document.createElement('p');
     stationStatus.textContent = stations[stationNumber].status === 'CLOSED' ? 
@@ -130,8 +135,7 @@ function displayStationData(stations, stationNumber) {
 }
 
 function initBooking(stations, stationNumber) {
-        
-    const bookedStation = new Booking(stations[stationNumber].name, stations[stationNumber].bike_stands, stations[stationNumber].available_bikes)
+    const bookedStation = new Booking(stations[stationNumber].name, stations[stationNumber].bike_stands, stations[stationNumber].available_bikes);
     
     stationInfo.innerHTML = '';
     
@@ -168,19 +172,17 @@ function initBooking(stations, stationNumber) {
     })
 }
 
-function initCountdown(stations, stationNumber) {    
-    console.log(document.getElementsByTagName('footer'));
-    console.log(document.getElementById('mainWrapper'));
-    
-    const mainWrapper = document.getElementById('mainWrapper');
+function initCountdown(stations, stationNumber) {
+    const appContainer = document.getElementById('appContainer');
     
     // Clean any potential footer element
     if (document.getElementsByTagName('footer').length > 0) {
         document.getElementById('mainWrapper').removeChild(document.getElementsByTagName('footer'));
     }
     
-    const newFooter = document.createElement('footer');
-    newFooter.style.display = 'flex';
+    const footer = document.createElement('footer');
+    footer.style.display = 'flex';
+    footer.id = 'ploup';
     
     const countdownIntro = document.createElement('div');
     countdownIntro.textContent = 'Temps restant sur votre réservation :';
@@ -188,9 +190,11 @@ function initCountdown(stations, stationNumber) {
     const countdownElt = document.createElement('div');
     countdownElt.textContent = '19 : 05';
     
-    newFooter.appendChild(countdownIntro);
-    newFooter.appendChild(countdownElt);    
-    mainWrapper.appendChild(newFooter);
+    footer.appendChild(countdownIntro);
+    footer.appendChild(countdownElt);
+    appContainer.appendChild(footer);
+    
+    $('#ploup').focus();
 }
 
 const stationInfo = document.getElementById('infosStation');

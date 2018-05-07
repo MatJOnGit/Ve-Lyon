@@ -12,28 +12,23 @@ html {
 
 /* Intro section */
 header {
-    height: 330px;
+    height: 35vh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-}
-
-header img {
-    height: 330px;
-    filter: hue-rotate(50deg);
-    -webkit-filter: hue-rotate(50deg);
+    
+    background-image: url("../images/velo-city.jpg");
+    background-size: cover;
+    background-position: bottom center;
 }
 
 /* Slideshow section */
 h1 {
-    position: absolute;
-    top: 15px;
-    left: 10%;
     color: white;
     font-size: 1.7em;
-    text-align: center;
-    margin: 0;
+    margin: 0 208px 0 0;
     text-shadow: 2px 2px black;
 }
 
@@ -44,32 +39,47 @@ h1 span {
 #slideshow {
     width: 300px;
     height: 240px;
+    margin-top: 8px;
     background-color: #0984e3;
     opacity: 0.9;
-    position: absolute;
-    top: 65px;
     border: white 2px solid;
 }
 
 /* App section */
+#appContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.1em;
+}
+
+#bikeBooking {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #map {
-    height: 450px;
-    margin: 10px;
+    width: 90%;
+    height: 50vh;
+    margin: 10px 0 5px;
     border: grey 1px solid;
     border-radius: 5px;
 }
 
 /* Data display section */
-
 #infosStation {
+    width: 90%;
     background-color: #74b9ff;
-    margin: 10px;
+    margin: 5px 0 5px;
     border: black 1px solid;
     border-radius: 5px;
     display: none;
     flex-direction: column;
     justify-content: center;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 /* Station data screen */
@@ -94,25 +104,24 @@ table {
     border-collapse: collapse;
 }
 
-td {
-    padding: 5px 20px;
-}
-
 td:nth-child(1) {
-    width: 40%;
+    width: 45%;
+    padding: 5px 10px 5px 40px;
 }
 
 td:nth-child(2) {
-    width: 60%;
+    width: 55%;
+    padding: 5px 20px;
+    font-style: italic;
 }
 
 .bookingButton {
-    font-size: 1.1em;
     color: white;
     border: 2px white solid;
     border-radius: 40px;
     box-shadow: 2px 3px #636e72;
     padding: 8px 16px;
+    font-size: 1.2em;
 }
 
 .booking {
@@ -125,7 +134,8 @@ td:nth-child(2) {
 
 #canvasDiv {
     width: 280px;
-    margin: 25px 0 60px 0;
+    margin-top: 25px;
+    margin-bottom: 60px;
     border: black 1px solid;
     align-self: center;
     position: relative;
@@ -133,7 +143,6 @@ td:nth-child(2) {
 
 #cancelButton {
     width: 10px;
-    font-size: 1.1em;
     margin: 0;
     align-self: center;
     position: absolute;
@@ -144,7 +153,7 @@ td:nth-child(2) {
 .reset,
 .confirm {
     position: absolute;
-    top: 264px;
+    top: 260px;
 }
 
 .reset {
@@ -158,18 +167,19 @@ td:nth-child(2) {
 }
 
 #canvas {
-    width: 100%;
+    width: 278px;
     height: 250px;
     background-color: white;
+    display: block;
 }
 
 /* Countdown section */
-
 footer {
-    margin: 10px;
+    width: 90%;
+    align-self: center;
+    margin: 5px 0;
     border: black 1px solid;
     border-radius: 5px;
-    /*background-color: #b2bec3;*/
     background-color: #74b9ff;
     font-size: 0.9em;
     display: none;
@@ -193,11 +203,9 @@ footer div:nth-child(2) {
     border-radius: 50%;
     box-shadow: 2px 3px #636e72;
     font-family: 'Orbitron';
-    font-size: 1.1em;
     font-weight: bold;
     color: white;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center; 
 }
@@ -206,22 +214,25 @@ footer div:nth-child(2) {
 
 /* Tablets */
 @media (min-width: 768px) {
-    h1 {
-        font-size: 2.2em;
-        left: 30px;
-    }
-    
     header {
-        height: 380px;
-    }
-    
-    header img {
-        height: 380px;
+        height: 38vh;
     }
 
+    h1 {
+        font-size: 2.2em;
+        margin: -10px 614px 0 0;
+    }
+    
     #slideshow {
         width: 425px;
         height: 240px;
+        margin-top: 12px;
+    }
+    
+    #map,
+    #infosStation,
+    footer {
+        width: 95%;
     }
     
     td:nth-child(1) {
@@ -231,46 +242,81 @@ footer div:nth-child(2) {
 
     td:nth-child(2) {
         width: 30%;
-        padding: 5px 80px 5px 50px;
-    }
-    
-    #canvasDiv {
-        width: 500px;
+        padding: 5px 130px 5px 50px;
     }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
     h1 {
-        font-size: 2.8em;
-        left: 30px;
+        font-size: 3.2em;
+        margin: -14px 0 0 0;
     }
     
     header {
-        height: 400px;
-    }
-    
-    header img {
-        height: 400px;
+        height: 500px;
     }
     
     #slideshow {
-        width: 425px;
-        height: 280px;
-        top: 90px;
+        width: 650px;
+        height: 362px;
+        margin-top: 28px;
+        flex-direction: row;
+    }
+    
+    /* App section */
+    #bikeBooking {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    #map {
+        width: 100%;
+        height: 50vh;
+        margin: 10px 5px 5px 0px;
+    }
+    
+    /* Data display section */
+    #bikeBooking {
+        width: 98%;
+    }
+    
+    #infosStation {
+        width: 400px;
+        min-width: 40%;
+        height: 50vh;
+        margin: 10px 0px 5px 5px;
+    }
+        
+    #infosStation p:nth-child(2) {
+        margin: 15px 0 10px;
+    }
+    
+    table {
+        width: 80%;
+        align-self: center;
     }
     
     td:nth-child(1) {
-        width: 20%;
-        padding: 5px 30px 5px 140px;
+        width: 40px;
+        padding: 5px 10px 5px 40px;
     }
 
     td:nth-child(2) {
-        width: 30%;
-        padding: 5px 80px 5px 50px;
+        width: 60%;
+        padding: 5px 20px;
     }
     
-    #canvasDiv {
-        width: 500px;
+    /* Countdown section */
+    footer {
+        width: 98%;
+        margin: 5px 0 10px 0;
+    }
+    
+    footer div:nth-child(2) {
+        width: 160px;
+        height: 160px;
+        font-size: 1.4em;
+        border: 4px white solid;
     }
 }
