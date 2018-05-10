@@ -13,9 +13,8 @@ function stationsTabBuilder(stations) {
 
 // Display a google map in the "map" div
 function initMap(stations) {
-    
     const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11.7,
+        zoom: 11.55,
         center: {
             lat: 45.754424,
             lng: 4.858030
@@ -59,11 +58,6 @@ function initMap(stations) {
 
 // Display station data into "infosStation" div
 function displayStationData(stations, stationNumber) {
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-        let mapElt = document.getElementById('map');
-        mapElt.style.width = 'calc(100% - 400px)';
-    }
-    
     stationInfo.innerHTML = '';
     stationInfo.style.display = "flex";
     
@@ -135,8 +129,6 @@ function displayStationData(stations, stationNumber) {
 }
 
 function initBooking(stations, stationNumber) {
-    const bookedStation = new Booking(stations[stationNumber].name, stations[stationNumber].bike_stands, stations[stationNumber].available_bikes);
-    
     stationInfo.innerHTML = '';
     
     const canvasDiv = document.createElement('div');
@@ -144,7 +136,6 @@ function initBooking(stations, stationNumber) {
     
     // create a button to come back to previous screen
     const cancelButton = document.createElement('div');
-    cancelButton.textContent = 'X';
     cancelButton.id = 'cancelButton';
     
     const resetButton = document.createElement('div');
@@ -155,10 +146,14 @@ function initBooking(stations, stationNumber) {
     confirmButton.textContent = 'Valider';
     confirmButton.classList.add('bookingButton', 'confirm');
     
-    canvasDiv.appendChild(cancelButton);
-    canvasDiv.appendChild(resetButton);
-    canvasDiv.appendChild(confirmButton);
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.id = 'canvasButtonsDiv';
+    
+    stationInfo.appendChild(cancelButton);
     stationInfo.appendChild(canvasDiv);
+    stationInfo.appendChild(buttonsContainer);
+    buttonsContainer.appendChild(resetButton);
+    buttonsContainer.appendChild(confirmButton);
     
     displayCanvas();
     
@@ -167,22 +162,36 @@ function initBooking(stations, stationNumber) {
     })
     
     confirmButton.addEventListener("click", function () {
-        displayStationData(stations, stationNumber);
-        initCountdown();
+        if (canvas.toDataURL() !== document.getElementById('blankCanvas').toDataURL()) {
+            displayStationData(stations, stationNumber);
+            initCountdown(stations, stationNumber);
+        }
+    })
+
+    resetButton.addEventListener("click", function () {
+        canvasDiv.innerHTML='';
+        displayCanvas();
     })
 }
 
 function initCountdown(stations, stationNumber) {
-    const appContainer = document.getElementById('appContainer');
+    sessionStorage.clear();
     
-    // Clean any potential footer element
-    if (document.getElementsByTagName('footer').length > 0) {
-        document.getElementById('mainWrapper').removeChild(document.getElementsByTagName('footer'));
-    }
+    sessionStorage.setItem("bookingTime", new Date());
+    sessionStorage.setItem("bookedStation", stations[stationNumber].name);
     
-    const footer = document.createElement('footer');
-    footer.style.display = 'flex';
-    footer.id = 'ploup';
+    const bookingDate = new Date(sessionStorage.getItem("bookingTime"));
+    const bookingHour = bookingDate.getHours();
+    const bookingMinute = bookingDate.getMinutes();
+    const bookingSecond = bookingDate.getSeconds();
+
+    console.log("Un vélo a été réservé à la station " + sessionStorage.getItem("bookedStation") + " à " + bookingHour + "h" + bookingMinute);
+    
+    
+    
+    const footer = document.getElementsByTagName('footer');
+    footer[0].style.display = 'flex';
+    footer[0].innerHTML= '';
     
     const countdownIntro = document.createElement('div');
     countdownIntro.textContent = 'Temps restant sur votre réservation :';
@@ -190,11 +199,8 @@ function initCountdown(stations, stationNumber) {
     const countdownElt = document.createElement('div');
     countdownElt.textContent = '19 : 05';
     
-    footer.appendChild(countdownIntro);
-    footer.appendChild(countdownElt);
-    appContainer.appendChild(footer);
-    
-    $('#ploup').focus();
+    footer[0].appendChild(countdownIntro);
+    footer[0].appendChild(countdownElt);
 }
 
 const stationInfo = document.getElementById('infosStation');

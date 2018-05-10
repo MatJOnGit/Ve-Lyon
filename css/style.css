@@ -78,8 +78,10 @@ h1 span {
     border-radius: 5px;
     display: none;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     font-size: 0.8em;
+    position: relative;    
 }
 
 /* Station data screen */
@@ -100,18 +102,20 @@ h1 span {
 }
 
 table {
-    margin: 16px 0;
+    margin: 16px 20px;
     border-collapse: collapse;
+}
+
+td {
+    padding: 5px 10px;
 }
 
 td:nth-child(1) {
     width: 45%;
-    padding: 5px 10px 5px 40px;
 }
 
 td:nth-child(2) {
     width: 55%;
-    padding: 5px 20px;
     font-style: italic;
 }
 
@@ -133,48 +137,71 @@ td:nth-child(2) {
 /* Booking screen */
 
 #canvasDiv {
-    width: 280px;
-    margin-top: 25px;
-    margin-bottom: 60px;
+    width: 250px;
+    height: 250px;
+    margin: -14px 0 0;
     border: black 1px solid;
     align-self: center;
     position: relative;
-}
-
-#cancelButton {
-    width: 10px;
-    margin: 0;
-    align-self: center;
-    position: absolute;
-    top: -22px;
-    left: 268px;
-}
-
-.reset,
-.confirm {
-    position: absolute;
-    top: 260px;
-}
-
-.reset {
-    background-color: #e17055;
-    left: 0;
-}
-
-.confirm {
-    background-color: #00b894;
-    right: 0;
+    background-color: white;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    z-index: 1;
 }
 
 #canvas {
-    width: 278px;
-    height: 250px;
-    background-color: white;
-    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#canvasButtonsDiv {
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+#cancelButton {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    font-size: 31px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    color: #fff;
+    background-color: #605F61;
+    border: white 2px solid;
+    border-radius: 50%;
+    align-self: center;
+    margin-top: 10px;
+    margin-left: 248px;
+    padding: 10px 4px 13px;
+    z-index: 2;
+}
+
+#cancelButton:before {
+    content: "x";
+}
+
+.reset {
+    cursor: pointer;
+    background-color: #e17055;
+}
+
+.confirm {
+    cursor: pointer;
+    background-color: #00b894;
 }
 
 /* Countdown section */
 footer {
+    display: none;
     width: 90%;
     align-self: center;
     margin: 5px 0;
@@ -210,9 +237,15 @@ footer div:nth-child(2) {
     align-items: center; 
 }
 
+
+
 /* Media Queries */
 
-/* Tablets */
+/***********************************************
+****************     Tablets     ***************
+***********************************************/
+
+
 @media (min-width: 768px) {
     header {
         height: 38vh;
@@ -235,18 +268,27 @@ footer div:nth-child(2) {
         width: 95%;
     }
     
+    table {
+        margin: 16px 0;
+    }
+    
     td:nth-child(1) {
-        width: 20%;
-        padding: 5px 30px 5px 140px;
+        width: 30%;
+        padding: 5px 0;
     }
 
     td:nth-child(2) {
-        width: 30%;
-        padding: 5px 130px 5px 50px;
+        padding: 5px 0;
+        text-align: right;
     }
 }
 
-/* Desktop */
+
+/***********************************************
+****************     Desktop     ***************
+***********************************************/
+
+
 @media (min-width: 1024px) {
     h1 {
         font-size: 3.2em;
@@ -282,8 +324,8 @@ footer div:nth-child(2) {
     }
     
     #infosStation {
-        width: 400px;
-        min-width: 40%;
+        width: 60%;
+        max-width: 430px;
         height: 50vh;
         margin: 10px 0px 5px 5px;
     }
@@ -297,16 +339,6 @@ footer div:nth-child(2) {
         align-self: center;
     }
     
-    td:nth-child(1) {
-        width: 40px;
-        padding: 5px 10px 5px 40px;
-    }
-
-    td:nth-child(2) {
-        width: 60%;
-        padding: 5px 20px;
-    }
-    
     /* Countdown section */
     footer {
         width: 98%;
@@ -314,9 +346,9 @@ footer div:nth-child(2) {
     }
     
     footer div:nth-child(2) {
-        width: 160px;
-        height: 160px;
-        font-size: 1.4em;
+        width: 120px;
+        height: 120px;
+        font-size: 1.2em;
         border: 4px white solid;
     }
 }

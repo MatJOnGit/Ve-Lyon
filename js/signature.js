@@ -1,71 +1,53 @@
 function displayCanvas() {
     
-    function addClick(x, y, dragging) {
-      clickX.push(x);
-      clickY.push(y);
-      clickDrag.push(dragging);
-    }
-    
-    function redraw() {
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-
-        context.strokeStyle = 'black';
-        context.lineJoin = 'round';
-        context.lineWidth = 3;
-
-        for(var i=0; i < clickX.length; i++) {		
-            context.beginPath();
-            if(clickDrag[i] && i) {
-                context.moveTo(clickX[i-1], clickY[i-1]);
-            } else {
-                context.moveTo(clickX[i]-1, clickY[i]);
-            }
-            context.lineTo(clickX[i], clickY[i]);
-            context.closePath();
-            context.stroke();
-        }
+    function draw(e) {
+        // stop the function if they are not mouse down
+        if(!isDrawing) return;
+        // listen for mouse move event
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
     }
     
     const canvasDiv = document.getElementById('canvasDiv');
     
     const canvas = document.createElement('canvas');
     canvas.id = 'canvas';
+    canvas.width = parent.innerWidth;
+    canvas.height = parent.innerHeight;
+    
+    const canvasTest = document.createElement('canvas');
+    canvasTest.id = 'blankCanvas';
+    canvasTest.width = parent.innerWidth;
+    canvasTest.height = parent.innerHeight;
+    canvasTest.style.display = 'none';
     
     canvasDiv.appendChild(canvas);
+    canvasDiv.appendChild(canvasTest);
     
-    if(typeof G_vmlCanvasManager != 'undefined') {
-	   canvas = G_vmlCanvasManager.initElement(canvas);
-    }
+    const ctx = canvas.getContext('2d');
     
-    var context = canvas.getContext("2d");
-    
-    // Events for mouse drawing
-    $('#canvas').mousedown(function(e) {
-        var mouseX = e.pageX - this.offsetLeft;
-        var mouseY = e.pageY - this.offsetTop;
-		
-        paint = true;
-        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
-        redraw();
+
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#ac0000';
+
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let isSigned = false;
+
+
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
     });
-    
-    $('#canvas').mousemove(function(e){
-        if(paint) {
-            addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-            redraw();
-        }
-    });
-    
-    $('#canvas').mouseup(function(e){
-      paint = false;
-    });
-    
-    $('#canvas').mouseleave(function(e){
-      paint = false;
-    });
-    
-    var clickX = new Array();
-    var clickY = new Array();
-    var clickDrag = new Array();
-    var paint;
+
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
 }
