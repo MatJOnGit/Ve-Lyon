@@ -121,51 +121,11 @@ function displayStationData(stations, stationNumber) {
         bookingButton.classList.add('bookingButton', 'booking');
         
         bookingButton.addEventListener("click", function () {            
-            initBooking(stations, stationNumber);
+            displayCanvas(stations, stationNumber);
         });
         
         stationInfo.appendChild(bookingButton);
     }
-}
-
-function initBooking(stations, stationNumber) {
-    stationInfo.innerHTML = '';
-    
-    const wrapper = document.createElement('div');
-    wrapper.id = 'canvasWrapper';
-    
-    // create a button to come back to previous screen
-    const cancelButton = document.createElement('div');
-    cancelButton.id = 'cancelButton';
-    
-    const resetButton = document.createElement('div');
-    resetButton.textContent = 'Réinitialiser';
-    resetButton.classList.add('bookingButton', 'reset');
-    
-    const confirmButton = document.createElement('div');
-    confirmButton.textContent = 'Valider';
-    confirmButton.classList.add('bookingButton', 'confirm');
-    confirmButton.id = 'confirmButton';
-    
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.id = 'canvasButtonsDiv';
-    
-    stationInfo.appendChild(cancelButton);
-    stationInfo.appendChild(wrapper);
-    stationInfo.appendChild(buttonsContainer);
-    buttonsContainer.appendChild(resetButton);
-    buttonsContainer.appendChild(confirmButton);
-    
-    displayCanvas(stations, stationNumber);
-    
-    cancelButton.addEventListener("click", function () {
-        displayStationData(stations, stationNumber);
-    })
-
-    resetButton.addEventListener("click", function () {
-        wrapper.innerHTML='';
-        displayCanvas(stations, stationNumber);
-    })
 }
 
 function initCountdown(stations, stationNumber) {

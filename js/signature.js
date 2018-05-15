@@ -6,8 +6,33 @@ function displayCanvas(stations, stationNumber) {
         canvas.getContext("2d").scale(ratio, ratio);
     }
     
-    const wrapper = document.getElementById('canvasWrapper');
+    stationInfo.innerHTML = '';
     
+    const wrapper = document.createElement('div');
+    wrapper.id = 'canvasWrapper';
+    
+    // create a button to come back to previous screen
+    const cancelButton = document.createElement('div');
+    cancelButton.id = 'cancelButton';
+    
+    const resetButton = document.createElement('div');
+    resetButton.textContent = 'Réinitialiser';
+    resetButton.classList.add('bookingButton', 'reset');
+    
+    const confirmButton = document.createElement('div');
+    confirmButton.textContent = 'Valider';
+    confirmButton.classList.add('bookingButton', 'confirm');
+    confirmButton.id = 'confirmButton';
+    
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.id = 'canvasButtonsDiv';
+    
+    stationInfo.appendChild(cancelButton);
+    stationInfo.appendChild(wrapper);
+    stationInfo.appendChild(buttonsContainer);
+    buttonsContainer.appendChild(resetButton);
+    buttonsContainer.appendChild(confirmButton);
+        
     const canvas = document.createElement('canvas');
     canvas.classList.add('signature-pad');
     canvas.id = 'signature-pad';
@@ -19,15 +44,21 @@ function displayCanvas(stations, stationNumber) {
     
     wrapper.appendChild(canvas);
     wrapper.appendChild(canvasTest);
-
+    
     window.onresize = resizeCanvas;
     resizeCanvas();
-
+    
     var signaturePad = new SignaturePad(canvas, {
         backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
     });
     
-    const confirmButton = document.getElementById('confirmButton');
+    cancelButton.addEventListener("click", function () {
+        displayStationData(stations, stationNumber);
+    })
+
+    resetButton.addEventListener("click", function () {
+        signaturePad.clear();
+    })
     
     confirmButton.addEventListener("click", function () {
         if (!signaturePad.isEmpty()) {
