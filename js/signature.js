@@ -1,53 +1,40 @@
-function displayCanvas() {
-    
-    function draw(e) {
-        // stop the function if they are not mouse down
-        if(!isDrawing) return;
-        // listen for mouse move event
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-        [lastX, lastY] = [e.offsetX, e.offsetY];
+function displayCanvas(stations, stationNumber) {
+    function resizeCanvas() {
+        var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
     }
     
-    const canvasDiv = document.getElementById('canvasDiv');
+    const wrapper = document.getElementById('canvasWrapper');
     
     const canvas = document.createElement('canvas');
-    canvas.id = 'canvas';
-    canvas.width = parent.innerWidth;
-    canvas.height = parent.innerHeight;
+    canvas.classList.add('signature-pad');
+    canvas.id = 'signature-pad';
     
     const canvasTest = document.createElement('canvas');
+    canvasTest.classList.add('signature-pad');
     canvasTest.id = 'blankCanvas';
-    canvasTest.width = parent.innerWidth;
-    canvasTest.height = parent.innerHeight;
     canvasTest.style.display = 'none';
     
-    canvasDiv.appendChild(canvas);
-    canvasDiv.appendChild(canvasTest);
-    
-    const ctx = canvas.getContext('2d');
-    
+    wrapper.appendChild(canvas);
+    wrapper.appendChild(canvasTest);
 
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#ac0000';
+    window.onresize = resizeCanvas;
+    resizeCanvas();
 
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
-    let isSigned = false;
-
-
-
-    canvas.addEventListener('mousedown', (e) => {
-        isDrawing = true;
-        [lastX, lastY] = [e.offsetX, e.offsetY];
+    var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
     });
-
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', () => isDrawing = false);
-    canvas.addEventListener('mouseout', () => isDrawing = false);
+    
+    const confirmButton = document.getElementById('confirmButton');
+    
+    confirmButton.addEventListener("click", function () {
+        if (!signaturePad.isEmpty()) {
+            initCountdown(stations, stationNumber);
+            displayStationData(stations, stationNumber);
+        } else if (signaturePad.isEmpty) {
+            return alert('Merci de bien vouloir signer votre réservation.');
+        }
+    })
 }

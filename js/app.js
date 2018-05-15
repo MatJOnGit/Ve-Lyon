@@ -131,8 +131,8 @@ function displayStationData(stations, stationNumber) {
 function initBooking(stations, stationNumber) {
     stationInfo.innerHTML = '';
     
-    const canvasDiv = document.createElement('div');
-    canvasDiv.id = 'canvasDiv';
+    const wrapper = document.createElement('div');
+    wrapper.id = 'canvasWrapper';
     
     // create a button to come back to previous screen
     const cancelButton = document.createElement('div');
@@ -145,32 +145,26 @@ function initBooking(stations, stationNumber) {
     const confirmButton = document.createElement('div');
     confirmButton.textContent = 'Valider';
     confirmButton.classList.add('bookingButton', 'confirm');
+    confirmButton.id = 'confirmButton';
     
     const buttonsContainer = document.createElement('div');
     buttonsContainer.id = 'canvasButtonsDiv';
     
     stationInfo.appendChild(cancelButton);
-    stationInfo.appendChild(canvasDiv);
+    stationInfo.appendChild(wrapper);
     stationInfo.appendChild(buttonsContainer);
     buttonsContainer.appendChild(resetButton);
     buttonsContainer.appendChild(confirmButton);
     
-    displayCanvas();
+    displayCanvas(stations, stationNumber);
     
     cancelButton.addEventListener("click", function () {
         displayStationData(stations, stationNumber);
     })
-    
-    confirmButton.addEventListener("click", function () {
-        if (canvas.toDataURL() !== document.getElementById('blankCanvas').toDataURL()) {
-            displayStationData(stations, stationNumber);
-            initCountdown(stations, stationNumber);
-        }
-    })
 
     resetButton.addEventListener("click", function () {
-        canvasDiv.innerHTML='';
-        displayCanvas();
+        wrapper.innerHTML='';
+        displayCanvas(stations, stationNumber);
     })
 }
 
@@ -181,13 +175,17 @@ function initCountdown(stations, stationNumber) {
     sessionStorage.setItem("bookedStation", stations[stationNumber].name);
     
     const bookingDate = new Date(sessionStorage.getItem("bookingTime"));
+    console.log(bookingDate);
+        
+//    const dateTest1 = new Date('Thu May 10 2018 19:11:22 GMT+0200 (Paris, Madrid (heure d’été))');
+//    const dateTest2 = new Date ('Thu May 10 2018 19:11:24 GMT+0200 (Paris, Madrid (heure d’été))')
+//    console.log(dateTest2 - dateTest1); // return 2000 (différence de 2000 ms, soit 2s)
+    
     const bookingHour = bookingDate.getHours();
     const bookingMinute = bookingDate.getMinutes();
     const bookingSecond = bookingDate.getSeconds();
 
     console.log("Un vélo a été réservé à la station " + sessionStorage.getItem("bookedStation") + " à " + bookingHour + "h" + bookingMinute);
-    
-    
     
     const footer = document.getElementsByTagName('footer');
     footer[0].style.display = 'flex';

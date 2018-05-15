@@ -120,6 +120,7 @@ td:nth-child(2) {
 }
 
 .bookingButton {
+    cursor: pointer;
     color: white;
     border: 2px white solid;
     border-radius: 40px;
@@ -128,17 +129,25 @@ td:nth-child(2) {
     font-size: 1.2em;
 }
 
+.bookingButton:active {
+    box-shadow: none;
+}
+
 .booking {
     background-color: #0984e3;
     margin: 16px 0px;
-    align-self: center;
 }
 
 /* Booking screen */
 
-#canvasDiv {
+#canvasWrapper {
+    position: relative;
     width: 250px;
-    height: 250px;
+    height: 125px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     margin: -14px 0 0;
     border: black 1px solid;
     align-self: center;
@@ -149,13 +158,20 @@ td:nth-child(2) {
     -ms-user-select: none;
     user-select: none;
     overflow: hidden;
+    box-shadow: 2px 3px #636e72;
     z-index: 1;
 }
 
-#canvas {
+.signature-pad {
     position: absolute;
     left: 0;
     top: 0;
+    width: 250px;
+    height: 250px;    
+}
+
+#blankCanvas {
+    top: 300px;
 }
 
 #canvasButtonsDiv {
@@ -175,13 +191,14 @@ td:nth-child(2) {
     display: inline-block;
     line-height: 0px;
     color: #fff;
-    background-color: #605F61;
+    background-color: black;
     border: white 2px solid;
     border-radius: 50%;
     align-self: center;
     margin-top: 10px;
     margin-left: 248px;
     padding: 10px 4px 13px;
+    box-shadow: 2px 3px #636e72;
     z-index: 2;
 }
 
@@ -189,13 +206,15 @@ td:nth-child(2) {
     content: "x";
 }
 
+#cancelButton:active {
+    box-shadow: none;
+}
+
 .reset {
-    cursor: pointer;
     background-color: #e17055;
 }
 
 .confirm {
-    cursor: pointer;
     background-color: #00b894;
 }
 
@@ -236,6 +255,27 @@ footer div:nth-child(2) {
     justify-content: center;
     align-items: center; 
 }
+
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#signature-pad {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width:400px;
+  height:200px;
+  background-color: white;
+}
+
+
 
 
 
@@ -280,6 +320,16 @@ footer div:nth-child(2) {
     td:nth-child(2) {
         padding: 5px 0;
         text-align: right;
+    }
+    
+    #canvasWrapper {
+        width: 600px;
+        height: 300px;
+    }
+    
+    #signature-pad {
+        width: 600px;
+        height: 300px;    
     }
 }
 
@@ -350,5 +400,15 @@ footer div:nth-child(2) {
         height: 120px;
         font-size: 1.2em;
         border: 4px white solid;
+    }
+    
+    #canvasWrapper {
+        width: 350px;
+        height: 175px;
+    }
+    
+    #signature-pad {
+        width: 350px;
+        height: 175px;
     }
 }
