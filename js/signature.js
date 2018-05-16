@@ -62,7 +62,7 @@ function displayCanvas(stations, stationNumber) {
     
     confirmButton.addEventListener("click", function () {
         if (!signaturePad.isEmpty()) {
-            initCountdown(stations, stationNumber);
+            displayCountdown(stations, stationNumber);
             displayStationData(stations, stationNumber);
         } else if (signaturePad.isEmpty) {
             return alert('Merci de bien vouloir signer votre réservation.');

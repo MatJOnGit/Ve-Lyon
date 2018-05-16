@@ -128,39 +128,6 @@ function displayStationData(stations, stationNumber) {
     }
 }
 
-function initCountdown(stations, stationNumber) {
-    sessionStorage.clear();
-    
-    sessionStorage.setItem("bookingTime", new Date());
-    sessionStorage.setItem("bookedStation", stations[stationNumber].name);
-    
-    const bookingDate = new Date(sessionStorage.getItem("bookingTime"));
-    console.log(bookingDate);
-        
-//    const dateTest1 = new Date('Thu May 10 2018 19:11:22 GMT+0200 (Paris, Madrid (heure d’été))');
-//    const dateTest2 = new Date ('Thu May 10 2018 19:11:24 GMT+0200 (Paris, Madrid (heure d’été))')
-//    console.log(dateTest2 - dateTest1); // return 2000 (différence de 2000 ms, soit 2s)
-    
-    const bookingHour = bookingDate.getHours();
-    const bookingMinute = bookingDate.getMinutes();
-    const bookingSecond = bookingDate.getSeconds();
-
-    console.log("Un vélo a été réservé à la station " + sessionStorage.getItem("bookedStation") + " à " + bookingHour + "h" + bookingMinute);
-    
-    const footer = document.getElementsByTagName('footer');
-    footer[0].style.display = 'flex';
-    footer[0].innerHTML= '';
-    
-    const countdownIntro = document.createElement('div');
-    countdownIntro.textContent = 'Temps restant sur votre réservation :';
-    
-    const countdownElt = document.createElement('div');
-    countdownElt.textContent = '19 : 05';
-    
-    footer[0].appendChild(countdownIntro);
-    footer[0].appendChild(countdownElt);
-}
-
 const stationInfo = document.getElementById('infosStation');
 
 fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=699ee067b85c71a4f7ca9adfdcaaa5145b06a437')

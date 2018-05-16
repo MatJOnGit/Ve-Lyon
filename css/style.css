@@ -38,7 +38,7 @@ h1 span {
 
 #slideshow {
     width: 300px;
-    height: 240px;
+    height: 230px;
     margin-top: 8px;
     background-color: #0984e3;
     opacity: 0.9;
@@ -240,6 +240,9 @@ footer div:nth-child(1) {
 }
 
 footer div:nth-child(2) {
+}
+
+footer div:nth-child(3) {
     width: 100px;
     height: 100px;
     margin: 15px 0 20px;
@@ -329,7 +332,11 @@ footer div:nth-child(2) {
     
     #signature-pad {
         width: 600px;
-        height: 300px;    
+        height: 300px;
+    }
+    
+    #cancelButton {
+        margin-left: 596px;
     }
 }
 
@@ -395,7 +402,7 @@ footer div:nth-child(2) {
         margin: 5px 0 10px 0;
     }
     
-    footer div:nth-child(2) {
+    footer div:nth-child(3) {
         width: 120px;
         height: 120px;
         font-size: 1.2em;
@@ -403,12 +410,16 @@ footer div:nth-child(2) {
     }
     
     #canvasWrapper {
-        width: 350px;
-        height: 175px;
+        width: 340px;
+        height: 170px;
     }
     
     #signature-pad {
-        width: 350px;
-        height: 175px;
+        width: 340px;
+        height: 170px;
+    }
+    
+    #cancelButton {
+        margin-left: 336px;
     }
 }
