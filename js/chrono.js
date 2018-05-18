@@ -16,16 +16,16 @@ function displayCountdown(stations, stationNumber) {
     function formatRemainingTime(countdown) {
         var minutes = Math.floor(countdown / 60000);
         var seconds = ((countdown % 60000) / 1000).toFixed(0);
-        return minutes + " : " + (seconds < 10 ? '0' : '') + seconds;
+        return minutes + ' : ' + (seconds < 10 ? '0' : '') + seconds;
     }
     
-    sessionStorage.clear();
+    localStorage.clear();
     
-    sessionStorage.setItem("bookingTime", new Date());
-    sessionStorage.setItem("bookedStation", stations[stationNumber].name);
+    localStorage.setItem("bookingTime", new Date());
+    localStorage.setItem("bookedStation", stations[stationNumber].name);
     
-    const bookingDate = new Date(sessionStorage.getItem("bookingTime"));
-        
+    const bookingDate = new Date(localStorage.getItem("bookingTime"));
+    
 //    const dateTest1 = new Date('Thu May 10 2018 19:11:22 GMT+0200 (Paris, Madrid (heure d’été))');
 //    const dateTest2 = new Date ('Thu May 10 2018 19:11:24 GMT+0200 (Paris, Madrid (heure d’été))')
 //    console.log(dateTest2 - dateTest1); // return 2000 (différence de 2000 ms, soit 2s)
@@ -34,16 +34,16 @@ function displayCountdown(stations, stationNumber) {
     const bookingMinute = bookingDate.getMinutes();
     const bookingSecond = bookingDate.getSeconds();
 
-    console.log("Un vélo a été réservé à la station " + sessionStorage.getItem("bookedStation") + " à " + bookingHour + "h" + bookingMinute);
+    console.log("Un vélo a été réservé à la station " + localStorage.getItem("bookedStation") + " à " + bookingHour + "h" + bookingMinute);
     
     const footer = document.getElementsByTagName('footer')[0];
     footer.style.display = 'flex';
     footer.innerHTML= '';
     
-    const countdownIntro = document.createElement('div');
+    const countdownIntro = document.createElement('p');
     countdownIntro.textContent = 'Temps restant sur votre réservation :';
     
-    const countdown = document.createElement('div');    
+    const countdown = document.createElement('span');    
     // Fix the booking timer (in milliseconds)
     countdown.textContent = 1200000; // add a way to set countdown to "20 mins - (actual time - booking time)" if there's already a booked bike on this station
     countdown.style.display = 'none';

@@ -1,5 +1,6 @@
 // Create a filtered tab from the JC Decaux data tab
 function stationsTabBuilder(stations) {
+    displayManual();
     let stationsTab = [];
 
     stations.forEach(station => {
@@ -64,7 +65,7 @@ function displayStationData(stations, stationNumber) {
     const stationName = document.createElement('p');
     stationName.textContent = 'La station "' + stations[stationNumber].name.toLowerCase() + '" est actuellement';
 
-    const stationStatus = document.createElement('p');
+    const stationStatus = document.createElement('span');
     stationStatus.textContent = stations[stationNumber].status === 'CLOSED' ? 
         'Fermée' :
         stations[stationNumber].available_bikes > 0 ?
@@ -120,7 +121,7 @@ function displayStationData(stations, stationNumber) {
         bookingButton.textContent = "Je réserve mon vélo'v";
         bookingButton.classList.add('bookingButton', 'booking');
         
-        bookingButton.addEventListener("click", function () {            
+        bookingButton.addEventListener("click", function () {
             displayCanvas(stations, stationNumber);
         });
         

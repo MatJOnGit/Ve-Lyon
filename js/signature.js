@@ -11,6 +11,9 @@ function displayCanvas(stations, stationNumber) {
     const wrapper = document.createElement('div');
     wrapper.id = 'canvasWrapper';
     
+    const introElt = document.createElement('p');
+    introElt.textContent = 'Merci de bien vouloir signer dans le cadre ci-dessous';
+    
     // create a button to come back to previous screen
     const cancelButton = document.createElement('div');
     cancelButton.id = 'cancelButton';
@@ -27,6 +30,7 @@ function displayCanvas(stations, stationNumber) {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.id = 'canvasButtonsDiv';
     
+    stationInfo.appendChild(introElt);
     stationInfo.appendChild(cancelButton);
     stationInfo.appendChild(wrapper);
     stationInfo.appendChild(buttonsContainer);
@@ -62,6 +66,7 @@ function displayCanvas(stations, stationNumber) {
     
     confirmButton.addEventListener("click", function () {
         if (!signaturePad.isEmpty()) {
+            //const currentBooking = new Booking(stationNumber);
             displayCountdown(stations, stationNumber);
             displayStationData(stations, stationNumber);
         } else if (signaturePad.isEmpty) {
