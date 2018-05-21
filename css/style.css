@@ -48,11 +48,11 @@ h1 span {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     position: relative;
 }
 
-#slideshow div:nth-child(1) {
+#slideshow div:nth-child(1) { /* indice de la page */
     width: 24px;
     height: 24px;
     font-size: 1.1em;
@@ -68,27 +68,78 @@ h1 span {
     text-align: center;
 }
 
-/*
-#slideshow div:nth-child(4) {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 16px 0;
+#slideshow p:nth-child(1),
+#slideshow p:nth-child(2),
+#slideshow button,
+#slideshow span:nth-child(8),
+#slideshow span:nth-child(9) {
+    position: absolute;
 }
-*/
+
+#slideshow p:nth-child(2) {
+    font-size: 1.1em;
+    font-weight: 500;
+    width: 60%;
+    top: 15px;
+}
+
+#slideshow p:nth-child(3) {
+    margin: 40px 30px 10px;
+    font-size: 0.9em;
+}
+
+#slideshow div:nth-child(4) {
+    margin-top: -5px;
+}
+
+.legende img {
+    width: 25px;
+    margin-left: 20px;
+}
+
+.legende span {
+    font-size: 0.8em;
+    margin-left: 6px;
+}
+
+.legende {
+    width: 80%;
+    display: none;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
 
 #slideshow button {
-    position: absolute;
-    bottom : 10px;
+    bottom: 10px;
 }
 
-#slideshow button:nth-last-child(2) {
+#slideshow span:nth-child(8),
+#slideshow span:nth-child(9) {
+    bottom: 12px;
+}
+
+#slideshow button {
+    background-color: inherit;
+    border: white 2px solid;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+}
+
+#slideshow button:nth-child(7) {
     left: 10px;
-    display: none;
 }
 
-#slideshow button:nth-last-child(1) {
+#slideshow span:nth-child(8) {
+    left: 40px;
+}
+
+#slideshow span:nth-child(9) {
+    right: 40px;
+}
+
+#slideshow button:nth-child(10) {
     right: 10px;
 }
 
@@ -356,6 +407,22 @@ footer div {
         margin-top: 12px;
     }
     
+    #slideshow p:nth-child(3) {
+        margin: 30px 30px 10px;
+    }
+    
+    #slideshow div:nth-child(4) {
+        margin-top: 5px;
+    }
+    
+    .legende img {
+        margin-left: 70px;
+    }
+    
+    .legende span {
+        margin-left: 15px;
+    }
+    
     #map,
     #infosStation,
     footer {
@@ -411,7 +478,56 @@ footer div {
         width: 650px;
         height: 362px;
         margin-top: 28px;
-        flex-direction: row;
+        font-size: 1.2em;
+    }
+    
+    #slideshow div:nth-child(1) { /* indice de la page */
+        width: 30px;
+        height: 30px;
+    }
+    
+    #slideshow p:nth-child(2) {
+        top: 40px;
+    }
+    
+    #slideshow p:nth-child(3) {
+        margin: 50px 30px 10px;
+    }
+    
+    #slideshow div:nth-child(4) {
+        margin-top: 10px;
+    }
+    
+    #slideshow span:nth-child(8),
+    #slideshow span:nth-child(9) {
+        bottom: 20px;
+    }
+    
+    #slideshow span:nth-child(8) {
+        left: 60px;
+    }
+
+    #slideshow span:nth-child(9) {
+        right: 60px;
+    }
+    
+    #slideshow button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #slideshow span {
+        font-size: 0.8em;
+        margin-left: 6px;
+    }
+    
+    .legende img {
+        margin-left: 135px;
+        width: 35px;
+    }
+    
+    .legende span {
+        margin-left: 25px;
     }
     
     /* App section */
