@@ -56,21 +56,22 @@ function displayCanvas(stations, stationNumber) {
         backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
     });
     
-    cancelButton.addEventListener("click", function () {
+    cancelButton.addEventListener("click", () => {
         displayStationData(stations, stationNumber);
-    })
+    });
 
-    resetButton.addEventListener("click", function () {
+    resetButton.addEventListener("click", () => {
         signaturePad.clear();
-    })
+    });
     
-    confirmButton.addEventListener("click", function () {
+    confirmButton.addEventListener("click", () => {
         if (!signaturePad.isEmpty()) {
             //const currentBooking = new Booking(stationNumber);
             displayCountdown(stations, stationNumber);
             displayStationData(stations, stationNumber);
+            // Hide bookingButton
         } else if (signaturePad.isEmpty) {
             return alert('Merci de bien vouloir signer votre réservation.');
-        }
-    })
+        };
+    });
 }

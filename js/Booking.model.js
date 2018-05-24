@@ -1,11 +1,11 @@
 class Booking {
-    constructor(stationID) {
-        this.bookingStation = stationID;
-        this.bookingTime = new Date();
-        this.booking_isActive = true;
+    constructor(stationID, stationName, bookingTime) {
+        this.bookedStationID = stationID;
+        this.bookingTime = bookingTime;
+        this.bookedStationName = stationName;
     }
     
-    //set changeBookingStatus() {
-        
-    //}
+    displayBooking() {
+        console.log('Un vélo a été réservé à la station ' + this.bookedStationName + ' à ' + this.bookingTime.getHours() + 'h' + this.bookingTime.getMinutes());
+    }
 }

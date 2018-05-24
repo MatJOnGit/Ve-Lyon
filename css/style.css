@@ -84,7 +84,7 @@ h1 span {
 }
 
 #slideshow p:nth-child(3) {
-    margin: 40px 30px 10px;
+    margin: 30px 30px 10px;
     font-size: 0.9em;
 }
 
@@ -116,7 +116,7 @@ h1 span {
 
 #slideshow span:nth-child(8),
 #slideshow span:nth-child(9) {
-    bottom: 12px;
+    bottom: 14px;
 }
 
 #slideshow button {
@@ -125,6 +125,8 @@ h1 span {
     border-radius: 8px;
     color: white;
     font-weight: 600;
+    width: 28px;
+    height: 28px;
 }
 
 #slideshow button:nth-child(7) {
@@ -132,11 +134,11 @@ h1 span {
 }
 
 #slideshow span:nth-child(8) {
-    left: 40px;
+    left: 45px;
 }
 
 #slideshow span:nth-child(9) {
-    right: 40px;
+    right: 45px;
 }
 
 #slideshow button:nth-child(10) {
@@ -186,10 +188,9 @@ h1 span {
 #infosStation p {
     text-align: center;
     font-weight: 500;
-    margin: 15px 25px;
+    margin: 25px 25px 15px;
     font-size: 1.1em;
     color: white;
-    
 }
 
 #infosStation span {
@@ -204,7 +205,7 @@ h1 span {
 }
 
 table {
-    margin: 16px 20px;
+    margin: 16px 20px 25px;
     border-collapse: collapse;
 }
 
@@ -240,7 +241,7 @@ td:nth-child(2) {
     margin: 16px 0px;
 }
 
-/* Booking screen */
+/* Signature screen */
 
 #canvasWrapper {
     position: relative;
@@ -335,19 +336,19 @@ footer {
     align-items: center;
 }
 
-footer p {
-    margin: 15px 0 0 0;
-    color: white;
-    font-weight: 500;
-}
-
 footer span {
+    color: white;
+    text-align: center;
 }
 
-footer div {
+footer span:nth-child(1) {
+    font-weight: 500;
+    margin: 15px 0 15px 0;
+}
+
+footer div:nth-child(3) {
     width: 100px;
     height: 100px;
-    margin: 15px 0 20px;
     padding: 8px 12px;
     background-color: #00b894;
     border: 2px white solid;
@@ -361,28 +362,34 @@ footer div {
     align-items: center; 
 }
 
-.wrapper {
-  position: relative;
-  width: 400px;
-  height: 200px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+footer span:nth-child(4) {
+    width: 80%;
+    background-color: #0984e3;
+    border: 1px white solid;
+    padding: 7px 15px;
+    margin: 15px 0 0;
 }
 
-#signature-pad {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width:400px;
-  height:200px;
-  background-color: white;
+footer div:nth-child(5) {
+    display: flex;
+    flex-direction: row;
 }
 
+.footerButton {
+    cursor: pointer;
+    background-color: #0984e3;
+    color: white;
+    font-size: 1.1em;
+    margin: 10px 0 20px;
+    border: 2px white solid;
+    border-radius: 40px;
+    box-shadow: 2px 3px #636e72;
+    padding: 8px 16px;
+}
 
-
-
+footer > div > button:nth-child(2) {
+    margin-left: 15px;
+}
 
 /* Media Queries */
 
@@ -420,7 +427,26 @@ footer div {
     }
     
     .legende span {
+        font-size: 0.9em;
         margin-left: 15px;
+    }
+    
+    #slideshow button {
+        width: 32px;
+        height: 32px;
+    }
+    
+    #slideshow span:nth-child(8),
+    #slideshow span:nth-child(9) {
+        bottom: 15px;
+    }
+    
+    #slideshow span:nth-child(8) {
+        left: 50px;
+    }
+    
+    #slideshow span:nth-child(9) {
+        right: 50px;
     }
     
     #map,
@@ -455,6 +481,10 @@ footer div {
     
     #cancelButton {
         margin-left: 596px;
+    }
+    
+    footer span:nth-child(4) {
+        width: 40%;
     }
 }
 
@@ -500,20 +530,15 @@ footer div {
     
     #slideshow span:nth-child(8),
     #slideshow span:nth-child(9) {
-        bottom: 20px;
+        bottom: 18px;
     }
     
     #slideshow span:nth-child(8) {
-        left: 60px;
+        left: 50px;
     }
 
     #slideshow span:nth-child(9) {
-        right: 60px;
-    }
-    
-    #slideshow button {
-        width: 40px;
-        height: 40px;
+        right: 50px;
     }
     
     #slideshow span {
@@ -569,13 +594,6 @@ footer div {
         margin: 5px 0 10px 0;
     }
     
-    footer div {
-        width: 120px;
-        height: 120px;
-        font-size: 1.2em;
-        border: 4px white solid;
-    }
-    
     #canvasWrapper {
         width: 340px;
         height: 170px;
@@ -588,5 +606,9 @@ footer div {
     
     #cancelButton {
         margin-left: 336px;
+    }
+    
+    footer span:nth-child(4) {
+        width: 25%;
     }
 }

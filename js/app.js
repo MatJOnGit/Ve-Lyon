@@ -1,69 +1,3 @@
-function displaySlide(slide) {
-    $('#slideshow').empty();
-    let requestedTab;
-
-    $('#slideshow').append('<div>' + manual[slide - 1].slide + '</div>');
-    $('#slideshow').append('<p>' + manual[slide - 1].title + '</p>');
-    $('#slideshow').append('<p>' + manual[slide - 1].text + '</p>');
-    $('#slideshow').append('<div class="legende"><img src="images/markers/blue_flag.png" /><span>Station ouverte</span></div>');
-    $('#slideshow').append('<div class="legende"><img src="images/markers/yellow_flag.png" /><span>Station sans vélo disponible</span></div>');
-    $('#slideshow').append('<div class="legende"><img src="images/markers/red_flag.png" /><span>Station fermée</span></div>');       
-
-    $('#slideshow').append('<button>&#10094;</button>');
-    $('#slideshow').append('<span>Précédent</span>');
-    $('#slideshow').append('<span>Suivant</span>');
-    $('#slideshow').append('<button>&#10095;<//button>');
-
-    $('#slideshow > button:first-of-type').click(function() {
-        requestedTab = $('#slideshow > div:nth-child(1)').text() - 2;
-        displayInteractiveElements(requestedTab);
-        editSlideContent(requestedTab);
-    });
-
-    $('#slideshow > button:last-of-type').click(function() {
-        requestedTab = Number($('#slideshow > div:nth-child(1)').text());
-        displayInteractiveElements(requestedTab);
-        editSlideContent(requestedTab);
-    });
-}
-
-function editSlideContent(requestedTab) {
-    $('#slideshow div:nth-child(1)').text(manual[requestedTab].slide);
-    $('#slideshow p:nth-child(2)').text(manual[requestedTab].title);
-    $('#slideshow p:nth-child(3)').text(manual[requestedTab].text);
-}
-
-function displayInteractiveElements(requestedTab) {
-    // Slideshow limits management
-    switch (requestedTab) {
-        case 0:
-            $('#slideshow > button:first-of-type').css('display', 'none');
-            $('#slideshow > span:first-of-type').css('display', 'none');
-            $('.legende').css('display', 'none');
-        break;
-
-        case 1:
-            $('#slideshow > button:first-of-type').css('display', 'block');
-            $('#slideshow > span:first-of-type').css('display', 'block');
-            $('.legende').css('display', 'flex');
-        break;
-
-        case 2:
-            $('.legende').css('display', 'none');
-            break;
-
-        case 3:
-            $('#slideshow > span:last-of-type').css('display', 'block')
-            $('#slideshow > button:last-of-type').css('display', 'block');
-        break;
-
-        case 4:
-            $('#slideshow > span:last-of-type').css('display', 'none');
-            $('#slideshow > button:last-of-type').css('display', 'none');
-        break;
-    };
-}
-
 // Create a filtered tab from the JC Decaux data tab
 function stationsTabBuilder(stations) {
     let stationsTab = [];
@@ -111,7 +45,7 @@ function initMap(stations) {
             map.setZoom(18);
             map.setCenter(marker.getPosition());
             displayStationData(stations, markers.indexOf(this));
-        })
+        });
         
         markers.push(marker);
     });
@@ -186,12 +120,16 @@ function displayStationData(stations, stationNumber) {
         bookingButton.textContent = "Je réserve mon vélo'v";
         bookingButton.classList.add('bookingButton', 'booking');
         
-        bookingButton.addEventListener("click", function () {
+        bookingButton.addEventListener("click", () => {
             displayCanvas(stations, stationNumber);
         });
         
         stationInfo.appendChild(bookingButton);
     };
+}
+
+function showLocalStorageData () {
+    console.log('Vélo réservé à la station ' + localStorage.getItem("bookedStation") + ' le '+ localStorage.getItem("bookingTime"));
 }
 
 const stationInfo = document.getElementById('infosStation');
@@ -204,3 +142,6 @@ window.addEventListener('load', () => {
         .then(data => initMap(data))
         .catch(error => console.log(error));
 })
+
+// Display LocalStorage data every second
+//intervalId = setInterval(showLocalStorageData, 1000);

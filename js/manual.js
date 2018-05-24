@@ -17,13 +17,13 @@ function displayManual() {
         $('#slideshow').append('<span>Suivant</span>');
         $('#slideshow').append('<button>&#10095;<//button>');
         
-        $('#slideshow > button:first-of-type').click(function() {
+        $('#slideshow > button:first-of-type').click( () => {
             requestedTab = $('#slideshow > div:nth-child(1)').text() - 2;
             displayInteractiveElements(requestedTab);
             editSlideContent(requestedTab);
         });
         
-        $('#slideshow > button:last-of-type').click(function() {
+        $('#slideshow > button:last-of-type').click( () => {
             requestedTab = Number($('#slideshow > div:nth-child(1)').text());
             displayInteractiveElements(requestedTab);
             editSlideContent(requestedTab);
