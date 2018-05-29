@@ -13,47 +13,93 @@ function stationsTabBuilder(stations) {
 
 // Display a google map in the "map" div
 function initMap(stations) {
-    const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11.55,
-        center: {
-            lat: 45.754424,
-            lng: 4.858030
-        },
-        fullscreenControl: false,
-        mapTypeControl: false,
-        streetViewControl: false
-    });
-    
-    // Create a tab of marker objects to be displayed as elements of the marker cluster
-    let markers = [];
-    stations.forEach(station => {
-        
-        const marker = new google.maps.Marker({
-            position: {
-                lat: station.latitude,
-                lng: station.longitude
+    if (localStorage.getItem('bookedStationName') === null) {
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11.55,
+            center: {
+                lat: 45.754424,
+                lng: 4.858030
             },
-            map: map,
-            icon: {
-                url: station.displayFlagURL(),
-                scaledSize: new google.maps.Size(40, 40)
-            }
+            fullscreenControl: false,
+            mapTypeControl: false,
+            streetViewControl: false
         });
-        
-        marker.addListener('click', function () {
-            // Center map on the selected item
-            map.setZoom(18);
-            map.setCenter(marker.getPosition());
-            displayStationData(stations, markers.indexOf(this));
+
+        // Create a tab of marker objects to be displayed as elements of the marker cluster
+        let markers = [];
+        stations.forEach(station => {
+
+            const marker = new google.maps.Marker({
+                position: {
+                    lat: station.latitude,
+                    lng: station.longitude
+                },
+                map: map,
+                icon: {
+                    url: station.displayFlagURL(),
+                    scaledSize: new google.maps.Size(40, 40)
+                }
+            });
+
+            marker.addListener('click', function () {
+                // Center map on the selected item
+                map.setZoom(18);
+                map.setCenter(marker.getPosition());
+                displayStationData(stations, markers.indexOf(this));
+            });
+
+            markers.push(marker);
         });
-        
-        markers.push(marker);
-    });
+
+        // Add a cluster container all markers previously created
+        var markerCluster = new MarkerClusterer(map, markers, {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        });
+    } else {
+        // display a map zoomed in the booked station in localStorage if there is any
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 18,
+            center: {
+                lat: Number(localStorage.getItem('bookedStationLat')),
+                lng: Number(localStorage.getItem('bookedStationLng'))
+            },
+            fullscreenControl: false,
+            mapTypeControl: false,
+            streetViewControl: false
+        });
     
-    // Add a cluster container all markers previously created
-    var markerCluster = new MarkerClusterer(map, markers, {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    });
+        // Create a tab of marker objects to be displayed as elements of the marker cluster
+        let markers = [];
+        stations.forEach(station => {
+
+            const marker = new google.maps.Marker({
+                position: {
+                    lat: station.latitude,
+                    lng: station.longitude
+                },
+                map: map,
+                icon: {
+                    url: station.displayFlagURL(),
+                    scaledSize: new google.maps.Size(40, 40)
+                }
+            });
+
+            marker.addListener('click', function () {
+                // Center map on the selected item
+                map.setZoom(18);
+                map.setCenter(marker.getPosition());
+                displayStationData(stations, markers.indexOf(this));
+            });
+
+            markers.push(marker);
+        });
+
+        // Add a cluster container all markers previously created
+        var markerCluster = new MarkerClusterer(map, markers, {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        });
+        displayStationData(stations, localStorage.getItem('bookedStationId'));
+    }
 }
 
 // Display station data into "infosStation" div
@@ -125,6 +171,12 @@ function displayStationData(stations, stationNumber) {
         });
         
         stationInfo.appendChild(bookingButton);
+        
+        // Remove the booking button if there's already an active booking and display the countdown for it
+        if (localStorage.getItem('bookedStationName') === stations[stationNumber].name) {
+            stationInfo.removeChild(bookingButton);
+            displayCountdown(stations, stationNumber);
+        }
     };
 }
 
@@ -142,6 +194,3 @@ window.addEventListener('load', () => {
         .then(data => initMap(data))
         .catch(error => console.log(error));
 })
-
-// Display LocalStorage data every second
-//intervalId = setInterval(showLocalStorageData, 1000);

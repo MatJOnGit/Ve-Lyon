@@ -45,8 +45,7 @@ function displayCountdown(stations, stationNumber) {
         })
     }
     
-    const bookingItem = new Booking (stationNumber, stations[stationNumber].name, new Date());
-    bookingItem.displayBooking();
+    const bookingItem = new Booking (stations, stationNumber, stations[stationNumber].name, new Date());
     
     const bookingTimer = new Timer(); // Create a Timer object when a booking has been signed
     
@@ -65,8 +64,11 @@ function displayCountdown(stations, stationNumber) {
     formatedCountdown.textContent = bookingTimer._formatedRemainingTime;
     
     // Store booking data into localStorage to be retrieved whenever it's necessary
-    localStorage.setItem("bookingTime", new Date());
-    localStorage.setItem("bookedStation", stations[stationNumber].name);
+    localStorage.setItem('bookingTime', new Date());
+    localStorage.setItem('bookedStationName', stations[stationNumber].name);
+    localStorage.setItem('bookedStationId', stationNumber);
+    localStorage.setItem('bookedStationLat', stations[stationNumber].latitude);
+    localStorage.setItem('bookedStationLng', stations[stationNumber].longitude);
     
     footer.appendChild(countdownIntro);
     footer.appendChild(formatedCountdown);
