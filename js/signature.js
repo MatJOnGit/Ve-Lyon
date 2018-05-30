@@ -14,7 +14,6 @@ function displayCanvas(stations, stationNumber) {
     const introElt = document.createElement('p');
     introElt.textContent = 'Merci de bien vouloir signer dans le cadre ci-dessous';
     
-    // create a button to come back to previous screen
     const cancelButton = document.createElement('div');
     cancelButton.id = 'cancelButton';
     
@@ -39,15 +38,8 @@ function displayCanvas(stations, stationNumber) {
         
     const canvas = document.createElement('canvas');
     canvas.classList.add('signature-pad');
-    canvas.id = 'signature-pad';
-    
-    const canvasTest = document.createElement('canvas');
-    canvasTest.classList.add('signature-pad');
-    canvasTest.id = 'blankCanvas';
-    canvasTest.style.display = 'none';
     
     wrapper.appendChild(canvas);
-    wrapper.appendChild(canvasTest);
     
     window.onresize = resizeCanvas;
     resizeCanvas();
@@ -66,7 +58,7 @@ function displayCanvas(stations, stationNumber) {
     
     confirmButton.addEventListener("click", () => {
         if (!signaturePad.isEmpty()) {
-            localStorage.clear();
+            sessionStorage.clear();
             displayCountdown(stations, stationNumber);
             displayStationData(stations, stationNumber);
         } else if (signaturePad.isEmpty) {

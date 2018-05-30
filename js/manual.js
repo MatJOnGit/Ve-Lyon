@@ -17,6 +17,7 @@ function displayManual() {
         $('#slideshow').append('<span>Suivant</span>');
         $('#slideshow').append('<button>&#10095;<//button>');
         
+        // Slide navigation through buttons
         $('#slideshow > button:first-of-type').click( () => {
             requestedTab = $('#slideshow > div:nth-child(1)').text() - 2;
             displayInteractiveElements(requestedTab);
@@ -28,8 +29,22 @@ function displayManual() {
             displayInteractiveElements(requestedTab);
             editSlideContent(requestedTab);
         });
+        
+        // Slide navigation through keyboard events
+        $(document).keyup(function(e) {
+            if ((e.keyCode === KeyCode.KEY_LEFT) && ($('#slideshow div:nth-child(1)').text()) != 1) {
+                requestedTab = $('#slideshow > div:nth-child(1)').text() - 2;
+                displayInteractiveElements(requestedTab);
+                editSlideContent(requestedTab);
+            } else if ((e.keyCode === KeyCode.KEY_RIGHT) && ($('#slideshow div:nth-child(1)').text()) != 5) {
+                requestedTab = Number($('#slideshow > div:nth-child(1)').text());
+                displayInteractiveElements(requestedTab);
+                editSlideContent(requestedTab);
+            }
+        });
     }
     
+    // Slide editing
     function editSlideContent(requestedTab) {
         $('#slideshow div:nth-child(1)').text(manual[requestedTab].slide);
         $('#slideshow p:nth-child(2)').text(manual[requestedTab].title);

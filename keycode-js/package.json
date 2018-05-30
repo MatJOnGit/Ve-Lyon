@@ -1,0 +1,38 @@
+{
+  "name": "keycode-js",
+  "version": "1.0.0",
+  "description": "A JavaScript package with Key Code constants",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.9.0",
+    "mocha": "^4.0.1",
+    "npm-run-all": "^4.1.1",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.50.0",
+    "rollup-plugin-commonjs": "^8.2.4",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
+  },
+  "scripts": {
+    "bundle": "rollup -c rollup.config.js",
+    "clean": "rimraf dist/",
+    "build": "run-s clean bundle",
+    "changelog": "./t changelog",
+    "prepublish": "npm run build",
+    "lint": "eslint --fix index.js rollup.config.js src test",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabirbaidhya/keycode-js.git"
+  },
+  "author": "Kabir Baidhya <kabirbaidhya@gmail.com>",
+  "keywords": [
+    "javascript",
+    "keycode",
+    "constants"
+  ],
+  "license": "MIT"
+}

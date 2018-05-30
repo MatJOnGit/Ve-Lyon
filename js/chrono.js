@@ -2,7 +2,7 @@ function displayCountdown(stations, stationNumber) {
     function displayBookingCancellation() {
         const cancelBookingButton = document.createElement('button');
         cancelBookingButton.textContent = 'Annuler ma réservation';
-        cancelBookingButton.classList.add('footerButton', 'footerCancelOption');
+        cancelBookingButton.classList.add('footerButton', 'footerAlerts');
         
         cancelBookingButton.addEventListener('click', () => {
             document.getElementsByTagName("footer")[0].removeChild(cancelBookingButton);
@@ -15,10 +15,10 @@ function displayCountdown(stations, stationNumber) {
     function displayConfirmation() {
         const cancelAlert = document.createElement('span')
         cancelAlert.textContent = 'Êtes-vous sûr(e) de vouloir annuler votre réservation ?';
-        cancelAlert.classList.add('footerCancelOption');
+        cancelAlert.classList.add('footerAlerts');
 
         const cancelBookingButtonContainer = document.createElement('div');
-        cancelBookingButtonContainer.classList.add('footerCancelOption');
+        cancelBookingButtonContainer.classList.add('footerAlerts');
 
         const confirmBookingClearing = document.createElement('button');
         confirmBookingClearing.textContent = 'Oui';
@@ -34,15 +34,34 @@ function displayCountdown(stations, stationNumber) {
         cancelBookingButtonContainer.appendChild(cancelBookingClearing);
 
         confirmBookingClearing.addEventListener('click', () => {
-            localStorage.clear();
+            sessionStorage.clear();
             window.location.reload();
         })
 
         cancelBookingClearing.addEventListener('click', () => {
-            document.getElementsByTagName("footer")[0].removeChild(document.getElementsByClassName('footerCancelOption')[1]);
-            document.getElementsByTagName("footer")[0].removeChild(document.getElementsByClassName('footerCancelOption')[0]);
+            document.getElementsByTagName("footer")[0].removeChild(document.getElementsByClassName('footerAlerts')[1]);
+            document.getElementsByTagName("footer")[0].removeChild(document.getElementsByClassName('footerAlerts')[0]);
             displayBookingCancellation();
         })
+    }
+    
+    function displayRebooking() {
+        footer.innerHTML = '';
+        
+        const rebookingAlert = document.createElement('span')
+        rebookingAlert.textContent = 'Votre réservation a expiré. Souhaitez-vous en faire une nouvelle ? (Cliquer sur "Oui" relancera la page)';
+        rebookingAlert.style.width = '80%';
+        
+        const rebookingButton = document.createElement('button');
+        rebookingButton.textContent = 'Oui';
+        rebookingButton.classList.add('footerButton');
+        
+        rebookingButton.addEventListener('click', () => {
+            window.location.reload();
+        })
+        
+        footer.appendChild(rebookingAlert);
+        footer.appendChild(rebookingButton);
     }
     
     const bookingItem = new Booking (stations, stationNumber, stations[stationNumber].name, new Date());
@@ -50,7 +69,6 @@ function displayCountdown(stations, stationNumber) {
     const bookingTimer = new Timer(); // Create a Timer object when a booking has been signed
     
     // Add static elements in the footer
-
     const footer = document.getElementsByTagName('footer')[0];
     const countdownIntro = document.createElement('span');
     const formatedCountdown = document.createElement('div');
@@ -63,12 +81,13 @@ function displayCountdown(stations, stationNumber) {
     formatedCountdown.id = 'timer';
     formatedCountdown.textContent = bookingTimer._formatedRemainingTime;
     
-    // Store booking data into localStorage to be retrieved whenever it's necessary
-    localStorage.setItem('bookingTime', new Date());
-    localStorage.setItem('bookedStationName', stations[stationNumber].name);
-    localStorage.setItem('bookedStationId', stationNumber);
-    localStorage.setItem('bookedStationLat', stations[stationNumber].latitude);
-    localStorage.setItem('bookedStationLng', stations[stationNumber].longitude);
+    // Store booking data into sessionStorage to be retrieved whenever it's necessary
+    sessionStorage.setItem('bookingTime', new Date());
+    sessionStorage.setItem('bookedStationName', stations[stationNumber].name);
+    sessionStorage.setItem('bookedStationId', stationNumber); 
+    sessionStorage.setItem('bookedStationLat', stations[stationNumber].latitude);
+    sessionStorage.setItem('bookedStationLng', stations[stationNumber].longitude);
+    sessionStorage.setItem('bookedStationBikes', stations[stationNumber].available_bikes);
     
     footer.appendChild(countdownIntro);
     footer.appendChild(formatedCountdown);
@@ -79,21 +98,16 @@ function displayCountdown(stations, stationNumber) {
     intervalId = setInterval(() => {
         if (bookingTimer.remainingTime <= 0) {
             clearInterval(intervalId);
-        } else if (bookingTimer.remainingTime === bookingTimer._duration / 2) {
+            document.getElementById('availableBikes').textContent = sessionStorage.getItem('bookedStationBikes');
+            sessionStorage.clear();
+            displayRebooking();
+        } else if ((bookingTimer.remainingTime <= bookingTimer._duration / 2) && (bookingTimer.remainingTime > bookingTimer._duration / 4)) {
             formatedCountdown.style.backgroundColor = 'orange';
-        } else if (bookingTimer.remainingTime === bookingTimer._duration / 4) {
+        } else if (bookingTimer.remainingTime <= bookingTimer._duration / 4) {
             formatedCountdown.style.backgroundColor = 'red';
         };
         
-        formatedCountdown.textContent = bookingTimer._formatedRemainingTime
-        bookingTimer.decreaseRemainingTime()
-
+        formatedCountdown.textContent = bookingTimer._formatedRemainingTime;
+        bookingTimer.decreaseRemainingTime();
     }, 1000);
-    
-    if (bookingTimer._remainingTime <= 0) {
-        // clear the existing booking if the booking time is up
-        localStorage.clear();
-        // Display an alert to the user to inform the booking is now empty
-        // Set the elements to their initial state
-    }
 }

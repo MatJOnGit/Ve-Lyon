@@ -1,5 +1,7 @@
 // Create a filtered tab from the JC Decaux data tab
 function stationsTabBuilder(stations) {
+    sessionStorage.clear()
+    
     let stationsTab = [];
 
     stations.forEach(station => {
@@ -13,93 +15,47 @@ function stationsTabBuilder(stations) {
 
 // Display a google map in the "map" div
 function initMap(stations) {
-    if (localStorage.getItem('bookedStationName') === null) {
-        const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11.55,
-            center: {
-                lat: 45.754424,
-                lng: 4.858030
+    const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11.55,
+        center: {
+            lat: 45.754424,
+            lng: 4.858030
+        },
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false
+    });
+
+    // Create a tab of marker objects to be displayed as elements of the marker cluster
+    let markers = [];
+    stations.forEach(station => {
+
+        const marker = new google.maps.Marker({
+            position: {
+                lat: station.latitude,
+                lng: station.longitude
             },
-            fullscreenControl: false,
-            mapTypeControl: false,
-            streetViewControl: false
+            map: map,
+            icon: {
+                url: station.displayFlagURL(),
+                scaledSize: new google.maps.Size(40, 40)
+            }
         });
 
-        // Create a tab of marker objects to be displayed as elements of the marker cluster
-        let markers = [];
-        stations.forEach(station => {
-
-            const marker = new google.maps.Marker({
-                position: {
-                    lat: station.latitude,
-                    lng: station.longitude
-                },
-                map: map,
-                icon: {
-                    url: station.displayFlagURL(),
-                    scaledSize: new google.maps.Size(40, 40)
-                }
-            });
-
-            marker.addListener('click', function () {
-                // Center map on the selected item
-                map.setZoom(18);
-                map.setCenter(marker.getPosition());
-                displayStationData(stations, markers.indexOf(this));
-            });
-
-            markers.push(marker);
+        marker.addListener('click', function () {
+            // Center map on the selected item
+            map.setZoom(18);
+            map.setCenter(marker.getPosition());
+            displayStationData(stations, markers.indexOf(this));
         });
 
-        // Add a cluster container all markers previously created
-        var markerCluster = new MarkerClusterer(map, markers, {
-            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        });
-    } else {
-        // display a map zoomed in the booked station in localStorage if there is any
-        const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 18,
-            center: {
-                lat: Number(localStorage.getItem('bookedStationLat')),
-                lng: Number(localStorage.getItem('bookedStationLng'))
-            },
-            fullscreenControl: false,
-            mapTypeControl: false,
-            streetViewControl: false
-        });
-    
-        // Create a tab of marker objects to be displayed as elements of the marker cluster
-        let markers = [];
-        stations.forEach(station => {
+        markers.push(marker);
+    });
 
-            const marker = new google.maps.Marker({
-                position: {
-                    lat: station.latitude,
-                    lng: station.longitude
-                },
-                map: map,
-                icon: {
-                    url: station.displayFlagURL(),
-                    scaledSize: new google.maps.Size(40, 40)
-                }
-            });
-
-            marker.addListener('click', function () {
-                // Center map on the selected item
-                map.setZoom(18);
-                map.setCenter(marker.getPosition());
-                displayStationData(stations, markers.indexOf(this));
-            });
-
-            markers.push(marker);
-        });
-
-        // Add a cluster container all markers previously created
-        var markerCluster = new MarkerClusterer(map, markers, {
-            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        });
-        displayStationData(stations, localStorage.getItem('bookedStationId'));
-    }
+    // Add a cluster container all markers previously created
+    var markerCluster = new MarkerClusterer(map, markers, {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    });
 }
 
 // Display station data into "infosStation" div
@@ -134,6 +90,7 @@ function displayStationData(stations, stationNumber) {
     availableBikesTitle.textContent = "Vélo(s) disponible(s)";
     
     const availableBikesContent = document.createElement('td');
+    availableBikesContent.id = 'availableBikes';
     availableBikesContent.textContent = stations[stationNumber].available_bikes;
     
     const availableStands = document.createElement('tr');
@@ -172,16 +129,12 @@ function displayStationData(stations, stationNumber) {
         
         stationInfo.appendChild(bookingButton);
         
-        // Remove the booking button if there's already an active booking and display the countdown for it
-        if (localStorage.getItem('bookedStationName') === stations[stationNumber].name) {
+        // Display the appropriate elements if there's already an active booking
+        if (sessionStorage.getItem('bookedStationName') === stations[stationNumber].name) {
             stationInfo.removeChild(bookingButton);
-            displayCountdown(stations, stationNumber);
+            availableBikesContent.textContent = stations[stationNumber].available_bikes - 1;
         }
     };
-}
-
-function showLocalStorageData () {
-    console.log('Vélo réservé à la station ' + localStorage.getItem("bookedStation") + ' le '+ localStorage.getItem("bookingTime"));
 }
 
 const stationInfo = document.getElementById('infosStation');
