@@ -32,11 +32,11 @@ function displayManual() {
         
         // Slide navigation through keyboard events
         $(document).keyup(function(e) {
-            if ((e.keyCode === KeyCode.KEY_LEFT) && ($('#slideshow div:nth-child(1)').text()) != 1) {
+            if ((e.keyCode === 37) && ($('#slideshow div:nth-child(1)').text()) != 1) {
                 requestedTab = $('#slideshow > div:nth-child(1)').text() - 2;
                 displayInteractiveElements(requestedTab);
                 editSlideContent(requestedTab);
-            } else if ((e.keyCode === KeyCode.KEY_RIGHT) && ($('#slideshow div:nth-child(1)').text()) != 5) {
+            } else if ((e.keyCode === 39) && ($('#slideshow div:nth-child(1)').text()) != 5) {
                 requestedTab = Number($('#slideshow > div:nth-child(1)').text());
                 displayInteractiveElements(requestedTab);
                 editSlideContent(requestedTab);
