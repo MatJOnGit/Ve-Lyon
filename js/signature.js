@@ -38,6 +38,7 @@ function displayCanvas(stations, stationNumber) {
         
     const canvas = document.createElement('canvas');
     canvas.classList.add('signature-pad');
+    canvas.id = 'signature-pad';
     
     wrapper.appendChild(canvas);
     
