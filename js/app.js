@@ -1,7 +1,5 @@
 // Create a filtered tab from the JC Decaux data tab
 function stationsTabBuilder(stations) {
-    sessionStorage.clear()
-    
     let stationsTab = [];
 
     stations.forEach(station => {
@@ -118,13 +116,16 @@ function displayStationData(stations, stationNumber) {
     
     stationInfo.appendChild(dataTable);
     
+    const NewBooking = new Booking(stations, stationNumber, stations[stationNumber].name, new Date());
+    const TimerItem = new Timer();
+    
     if (stations[stationNumber].flag_color === 'blue') {
         const bookingButton = document.createElement('button');
         bookingButton.textContent = "Je réserve mon vélo'v";
         bookingButton.classList.add('bookingButton', 'booking');
         
         bookingButton.addEventListener("click", () => {
-            displayCanvas(stations, stationNumber);
+            NewBooking.displayCanvas(stations, stationNumber, TimerItem);
         });
         
         stationInfo.appendChild(bookingButton);
@@ -138,9 +139,11 @@ function displayStationData(stations, stationNumber) {
 }
 
 const stationInfo = document.getElementById('infosStation');
+const footer = document.getElementsByTagName('footer')[0];
 
 window.addEventListener('load', () => {
-    displayManual();
+    const ManualItem = new Manual();
+    ManualItem.displaySlide(1);
     fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=699ee067b85c71a4f7ca9adfdcaaa5145b06a437')
         .then(response => response.json())
         .then(data => stationsTabBuilder(data))
