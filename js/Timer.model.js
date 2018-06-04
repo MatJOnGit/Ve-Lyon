@@ -1,8 +1,8 @@
 class Timer {
-    constructor(bookingTime) {
-        this._duration = 1200000 - (new Date() - bookingTime);
-        this._remainingTime = this._duration;
-        this._formatedRemainingTime = this.formatRemainingTime(this._remainingTime);
+    constructor(duration, remainingTime, formatedRemainingTime) {
+        this._duration = duration;
+        this._remainingTime = remainingTime;
+        this._formatedRemainingTime = formatedRemainingTime;
     }
     
     get remainingTime() {
@@ -10,7 +10,7 @@ class Timer {
     }
     
     get bookingTime() {
-        return this._bookingTime;
+        return this.bookingTime;
     }
 
     formatRemainingTime(countdown) {
@@ -44,14 +44,14 @@ class Timer {
 
         // display the timer in the clock div and change its content and style every second
         let intervalId = setInterval(() => {
-            if (NewBooking.remainingTime <= 0) {
+            if (this.remainingTime <= 0) {
                 clearInterval(intervalId);
                 document.getElementById('availableBikes').textContent = sessionStorage.getItem('bookedStationBikes');
                 sessionStorage.clear();
                 NewBooking.displayRebooking();
-            } else if ((this.remainingTime <= this._duration / 2) && (this.remainingTime > this._duration / 4)) {
+            } else if ((this.remainingTime <= 600000) && (this.remainingTime > 300000)) {
                 formatedCountdown.style.backgroundColor = 'orange';
-            } else if (this.remainingTime <= this._duration / 4) {
+            } else if (this.remainingTime <= 300000) {
                 formatedCountdown.style.backgroundColor = 'red';
             };
 

@@ -53,6 +53,25 @@ class Booking {
         })
     }
     
+    displayRebooking() {
+        footer.innerHTML = '';
+        
+        const rebookingAlert = document.createElement('span')
+        rebookingAlert.textContent = 'Votre réservation a expiré. Souhaitez-vous en faire une nouvelle ? (Cliquer sur "Oui" relancera la page)';
+        rebookingAlert.style.width = '80%';
+        
+        const rebookingButton = document.createElement('button');
+        rebookingButton.textContent = 'Oui';
+        rebookingButton.classList.add('footerButton');
+        
+        rebookingButton.addEventListener('click', () => {
+            window.location.reload();
+        })
+        
+        footer.appendChild(rebookingAlert);
+        footer.appendChild(rebookingButton);
+    }
+    
     resizeCanvas(canvas) {
         var ratio =  Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;

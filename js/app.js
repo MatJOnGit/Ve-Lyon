@@ -165,7 +165,9 @@ function displayStationData(stations, stationNumber) {
     
     const NewBooking = new Booking(stations, stationNumber, stations[stationNumber].name, new Date());
     
-    if (stations[stationNumber].flag_color === 'blue') {
+    
+    // Display a button to create a new booking if there is no booking on the displayed station (if a booking is possible)
+    if ((stations[stationNumber].flag_color === 'blue') && (sessionStorage.getItem('bookedStationName') != stations[stationNumber].name)) {
         const bookingButton = document.createElement('button');
         bookingButton.textContent = "Je réserve mon vélo'v";
         bookingButton.classList.add('bookingButton', 'booking');
@@ -179,23 +181,11 @@ function displayStationData(stations, stationNumber) {
     
     // Display the appropriate elements if there's already an active booking
     if (sessionStorage.getItem('bookedStationName') === stations[stationNumber].name) {
-        const TimerTruc = new Timer(new Date());
-        console.log(new Date());
-        console.log(TimerTruc);
-        
-        const TimerItem = new Timer(sessionStorage.getItem('bookingTime'));
-        console.log(sessionStorage.getItem('bookingTime'));
-        console.log(TimerItem);
+        const timerDuration = 1200000 - (new Date() - new Date(sessionStorage.getItem('bookingTime')));
+        const TimerItem = new Timer(timerDuration, timerDuration, '20 : 00');
         TimerItem.displayCountdown(stations, stationNumber, NewBooking);
         availableBikesContent.textContent = stations[stationNumber].available_bikes - 1;
-    };
-    
-//    // initialize a timer if the user already made a booking
-//    if (sessionStorage.getItem('bookedStationName') != null) {
-//        const TimerItem = new Timer(sessionStorage.getItem('bookingTime'));
-//        console.log(TimerItem);
-//    }
-     
+    }
 }
 
 const stationInfo = document.getElementById('infosStation');
