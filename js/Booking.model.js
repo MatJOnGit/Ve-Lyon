@@ -60,7 +60,7 @@ class Booking {
         canvas.getContext("2d").scale(ratio, ratio);
     }
     
-    displayCanvas(stations, stationNumber, TimerItem) {    
+    displayCanvas(stations, stationNumber) {    
         stationInfo.innerHTML = '';
 
         const wrapper = document.createElement('div');
@@ -115,8 +115,18 @@ class Booking {
         confirmButton.addEventListener("click", () => {
             if (!signaturePad.isEmpty()) {
                 sessionStorage.clear();
+                // Store booking data into sessionStorage to be retrieved whenever it's necessary
+                sessionStorage.setItem('bookingTime', new Date());
+                sessionStorage.setItem('bookedStationName', stations[stationNumber].name);
+                sessionStorage.setItem('bookedStationId', stationNumber); 
+                sessionStorage.setItem('bookedStationLat', stations[stationNumber].latitude);
+                sessionStorage.setItem('bookedStationLng', stations[stationNumber].longitude);
+                sessionStorage.setItem('bookedStationBikes', stations[stationNumber].available_bikes);
+                // Display a timer and elements to make another booking if necessary
+                const TimerItem = new Timer(new Date());
                 TimerItem.displayCountdown(stations, stationNumber, this);
                 displayStationData(stations, stationNumber);
+                return TimerItem;
             } else if (signaturePad.isEmpty) {
                 return alert('Merci de bien vouloir signer votre réservation.');
             };

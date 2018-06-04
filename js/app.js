@@ -13,47 +13,94 @@ function stationsTabBuilder(stations) {
 
 // Display a google map in the "map" div
 function initMap(stations) {
-    const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11.55,
-        center: {
-            lat: 45.754424,
-            lng: 4.858030
-        },
-        fullscreenControl: false,
-        mapTypeControl: false,
-        streetViewControl: false
-    });
-
-    // Create a tab of marker objects to be displayed as elements of the marker cluster
-    let markers = [];
-    stations.forEach(station => {
-
-        const marker = new google.maps.Marker({
-            position: {
-                lat: station.latitude,
-                lng: station.longitude
+    if (sessionStorage.getItem('bookedStationName') === null) {
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11.55,
+            center: {
+                lat: 45.754424,
+                lng: 4.858030
             },
-            map: map,
-            icon: {
-                url: station.displayFlagURL(),
-                scaledSize: new google.maps.Size(40, 40)
-            }
+            fullscreenControl: false,
+            mapTypeControl: false,
+            streetViewControl: false
         });
 
-        marker.addListener('click', function () {
-            // Center map on the selected item
-            map.setZoom(18);
-            map.setCenter(marker.getPosition());
-            displayStationData(stations, markers.indexOf(this));
+        // Create a tab of marker objects to be displayed as elements of the marker cluster
+        let markers = [];
+        stations.forEach(station => {
+
+            const marker = new google.maps.Marker({
+                position: {
+                    lat: station.latitude,
+                    lng: station.longitude
+                },
+                map: map,
+                icon: {
+                    url: station.displayFlagURL(),
+                    scaledSize: new google.maps.Size(40, 40)
+                }
+            });
+
+            marker.addListener('click', function () {
+                // Center map on the selected item
+                map.setZoom(18);
+                map.setCenter(marker.getPosition());
+                displayStationData(stations, markers.indexOf(this));
+            });
+
+            markers.push(marker);
         });
 
-        markers.push(marker);
-    });
+        // Add a cluster container all markers previously created
+        var markerCluster = new MarkerClusterer(map, markers, {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        });
+        
+    } else {
+        // display a map zoomed in the booked station in sessionStorage if there is any
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 18,
+            center: {
+                lat: Number(sessionStorage.getItem('bookedStationLat')),
+                lng: Number(sessionStorage.getItem('bookedStationLng'))
+            },
+            fullscreenControl: false,
+            mapTypeControl: false,
+            streetViewControl: false
+        });
+    
+        // Create a tab of marker objects to be displayed as elements of the marker cluster
+        let markers = [];
+        stations.forEach(station => {
 
-    // Add a cluster container all markers previously created
-    var markerCluster = new MarkerClusterer(map, markers, {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    });
+            const marker = new google.maps.Marker({
+                position: {
+                    lat: station.latitude,
+                    lng: station.longitude
+                },
+                map: map,
+                icon: {
+                    url: station.displayFlagURL(),
+                    scaledSize: new google.maps.Size(40, 40)
+                }
+            });
+
+            marker.addListener('click', function () {
+                // Center map on the selected item
+                map.setZoom(18);
+                map.setCenter(marker.getPosition());
+                displayStationData(stations, markers.indexOf(this));
+            });
+
+            markers.push(marker);
+        });
+
+        // Add a cluster container all markers previously created
+        var markerCluster = new MarkerClusterer(map, markers, {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        });
+        displayStationData(stations, sessionStorage.getItem('bookedStationId'));
+    }
 }
 
 // Display station data into "infosStation" div
@@ -117,25 +164,38 @@ function displayStationData(stations, stationNumber) {
     stationInfo.appendChild(dataTable);
     
     const NewBooking = new Booking(stations, stationNumber, stations[stationNumber].name, new Date());
-    const TimerItem = new Timer();
     
     if (stations[stationNumber].flag_color === 'blue') {
         const bookingButton = document.createElement('button');
         bookingButton.textContent = "Je réserve mon vélo'v";
         bookingButton.classList.add('bookingButton', 'booking');
-        
+
         bookingButton.addEventListener("click", () => {
-            NewBooking.displayCanvas(stations, stationNumber, TimerItem);
+            NewBooking.displayCanvas(stations, stationNumber);
         });
-        
+
         stationInfo.appendChild(bookingButton);
+    }
+    
+    // Display the appropriate elements if there's already an active booking
+    if (sessionStorage.getItem('bookedStationName') === stations[stationNumber].name) {
+        const TimerTruc = new Timer(new Date());
+        console.log(new Date());
+        console.log(TimerTruc);
         
-        // Display the appropriate elements if there's already an active booking
-        if (sessionStorage.getItem('bookedStationName') === stations[stationNumber].name) {
-            stationInfo.removeChild(bookingButton);
-            availableBikesContent.textContent = stations[stationNumber].available_bikes - 1;
-        }
+        const TimerItem = new Timer(sessionStorage.getItem('bookingTime'));
+        console.log(sessionStorage.getItem('bookingTime'));
+        console.log(TimerItem);
+        TimerItem.displayCountdown(stations, stationNumber, NewBooking);
+        availableBikesContent.textContent = stations[stationNumber].available_bikes - 1;
     };
+    
+//    // initialize a timer if the user already made a booking
+//    if (sessionStorage.getItem('bookedStationName') != null) {
+//        const TimerItem = new Timer(sessionStorage.getItem('bookingTime'));
+//        console.log(TimerItem);
+//    }
+     
 }
 
 const stationInfo = document.getElementById('infosStation');

@@ -107,7 +107,7 @@ class Manual {
         });
         
         // Slide navigation through keyboard events
-        $(document).keyup(function(e) {
+        $(document).keyup( (e) => {
             if ((e.keyCode === 37) && ($('#slideshow div:nth-child(1)').text()) != 1) {
                 requestedTab = $('#slideshow > div:nth-child(1)').text() - 2;
                 this.displayInteractiveElements(requestedTab);
