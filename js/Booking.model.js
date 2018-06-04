@@ -1,5 +1,5 @@
 class Booking {
-    constructor(stations, stationID, stationName, bookingTime) {
+    constructor(stationName) {
         this._bookedStationName = stationName;
     }
     
@@ -58,7 +58,7 @@ class Booking {
         
         const rebookingAlert = document.createElement('span')
         rebookingAlert.textContent = 'Votre réservation a expiré. Souhaitez-vous en faire une nouvelle ? (Cliquer sur "Oui" relancera la page)';
-        rebookingAlert.style.width = '80%';
+        rebookingAlert.style.width = '60%';
         
         const rebookingButton = document.createElement('button');
         rebookingButton.textContent = 'Oui';

@@ -4,15 +4,15 @@ class Timer {
         this._remainingTime = remainingTime;
         this._formatedRemainingTime = formatedRemainingTime;
     }
-    
+
     get remainingTime() {
         return this._remainingTime;
     }
     
-    get bookingTime() {
-        return this.bookingTime;
+    get formatedRemainingTime() {
+        return this._formatedRemainingTime;
     }
-
+    
     formatRemainingTime(countdown) {
         let minutes = Math.floor(countdown / 60000);
         let seconds = ((countdown % 60000) / 1000).toFixed(0);
@@ -35,7 +35,7 @@ class Timer {
         countdownIntro.textContent = 'Temps restant sur votre réservation :';
 
         formatedCountdown.id = 'timer';
-        formatedCountdown.textContent = this._formatedRemainingTime;
+        formatedCountdown.textContent = this.formatedRemainingTime;
 
         footer.appendChild(countdownIntro);
         footer.appendChild(formatedCountdown);

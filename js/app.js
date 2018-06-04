@@ -163,9 +163,8 @@ function displayStationData(stations, stationNumber) {
     
     stationInfo.appendChild(dataTable);
     
-    const NewBooking = new Booking(stations, stationNumber, stations[stationNumber].name, new Date());
-    
-    
+    const NewBooking = new Booking(stations[stationNumber].name);
+        
     // Display a button to create a new booking if there is no booking on the displayed station (if a booking is possible)
     if ((stations[stationNumber].flag_color === 'blue') && (sessionStorage.getItem('bookedStationName') != stations[stationNumber].name)) {
         const bookingButton = document.createElement('button');
