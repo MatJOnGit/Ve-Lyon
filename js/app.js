@@ -26,7 +26,7 @@ function initMap(stations) {
         });
 
         // Create a tab of marker objects to be displayed as elements of the marker cluster
-        let markers = [];
+        const markers = [];
         stations.forEach(station => {
 
             const marker = new google.maps.Marker({
@@ -52,7 +52,7 @@ function initMap(stations) {
         });
 
         // Add a cluster container all markers previously created
-        var markerCluster = new MarkerClusterer(map, markers, {
+        const markerCluster = new MarkerClusterer(map, markers, {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         });
         
@@ -96,7 +96,7 @@ function initMap(stations) {
         });
 
         // Add a cluster container all markers previously created
-        var markerCluster = new MarkerClusterer(map, markers, {
+        const markerCluster = new MarkerClusterer(map, markers, {
             imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         });
         displayStationData(stations, sessionStorage.getItem('bookedStationId'));

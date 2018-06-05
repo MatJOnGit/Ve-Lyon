@@ -46,7 +46,7 @@ class Timer {
         let intervalId = setInterval(() => {
             if (this.remainingTime <= 0) {
                 clearInterval(intervalId);
-                document.getElementById('availableBikes').textContent = sessionStorage.getItem('bookedStationBikes');
+                document.getElementById('availableBikes').textContent++;
                 sessionStorage.clear();
                 NewBooking.displayRebooking();
             } else if ((this.remainingTime <= 600000) && (this.remainingTime > 300000)) {

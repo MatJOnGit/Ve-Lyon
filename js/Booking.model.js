@@ -73,7 +73,7 @@ class Booking {
     }
     
     resizeCanvas(canvas) {
-        var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+        const ratio =  Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
         canvas.getContext("2d").scale(ratio, ratio);
@@ -119,7 +119,7 @@ class Booking {
         window.onresize = this.resizeCanvas;
         this.resizeCanvas(canvas);
 
-        var signaturePad = new SignaturePad(canvas, {
+        const signaturePad = new SignaturePad(canvas, {
             backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
         });
 
