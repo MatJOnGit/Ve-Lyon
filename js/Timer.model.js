@@ -16,7 +16,7 @@ class Timer {
     formatRemainingTime(countdown) {
         let minutes = Math.floor(countdown / 60000);
         let seconds = ((countdown % 60000) / 1000).toFixed(0);
-        return minutes + ' : ' + (seconds < 10 ? '0' : '') + seconds;
+        return minutes + ' : ' + (seconds < 10 ? '0' : '') + (seconds === 60 ? '00' : seconds);
     }
 
     decreaseRemainingTime() {

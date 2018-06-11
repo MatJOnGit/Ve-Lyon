@@ -142,7 +142,7 @@ class Booking {
                 sessionStorage.setItem('bookedStationLng', stations[stationNumber].longitude);
                 sessionStorage.setItem('bookedStationBikes', stations[stationNumber].available_bikes);
                 // Display a timer and elements to make another booking if necessary
-                const TimerItem = new Timer(new Date());
+                const TimerItem = new Timer(new Date(), new Date(), '20 : 00');
                 TimerItem.displayCountdown(stations, stationNumber, this);
                 displayStationData(stations, stationNumber);
                 return TimerItem;
